@@ -1,0 +1,29 @@
+body {
+
+	background: url(../images/Grey-website-background.jpg)  repeat-x;
+
+	}
+
+#logo {
+
+	background: url(../images/logo-grey.png) no-repeat;
+
+	}
+
+#logo.blank {
+
+	background: url(../images/logo-grey-blank.png) no-repeat;
+
+	}
+
+h2 {
+
+	color: #8f8f8f;
+
+	}
+
+#when, .textwidget {
+
+	color: #cfcfcf;
+
+	}

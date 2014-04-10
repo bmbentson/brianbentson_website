@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8" />
+
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="shortcut icon" href="http://180016988.r.cdn77.net/favicon.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" media="all" href="http://180016988.r.cdn77.net/wp-content/themes/unimax/style.css" />
+<link rel="pingback" href="http://www.unixmen.com/xmlrpc.php" />
+<script type="text/javascript">
+	window.google_analytics_uacct = "UA-6194676-1";
+</script>
+
+<!-- This site is optimized with the Yoast WordPress SEO plugin v1.4.19 - http://yoast.com/wordpress/seo/ -->
+<title>Install Ampache Streaming Media Server On CentOS 6.4 | Unixmen</title>
+<meta name="description" content="Ampache is a a web based audio/video streaming software and file manager. It allows you to access your music &amp; videos from anywhere, using almost any i"/>
+<link rel="canonical" href="http://www.unixmen.com/setup-streaming-media-server-ampache/" />
+<link rel="author" href="https://plus.google.com/u/0/100039709769930445046/posts/p/pub"/>
+<link rel="publisher" href="https://plus.google.com/communities/117217680171357822524"/>
+<!-- / Yoast WordPress SEO plugin. -->
+
+<link rel="alternate" type="application/rss+xml" title="Unixmen &raquo; Feed" href="http://www.unixmen.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Unixmen &raquo; Comments Feed" href="http://www.unixmen.com/comments/feed/" />
+
+            <script type="text/javascript">//<![CDATA[
+            // Google Analytics for WordPress by Yoast v4.3.3 | http://yoast.com/wordpress/google-analytics/
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-6194676-1']);
+				            _gaq.push(['_setCustomVar',1,'post_type','post',3],['_setCustomVar',2,'author','sk',3],['_setCustomVar',3,'tags','ampache streaming-media-server',3],['_setCustomVar',4,'categories','centos fedora linux-tutorials opensource software',3],['_trackPageview']);
+            (function () {
+                var ga = document.createElement('script');
+                ga.type = 'text/javascript';
+                ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(ga, s);
+            })();
+            //]]></script>
+			<link rel="alternate" type="application/rss+xml" title="Unixmen &raquo; Install Ampache Streaming Media Server On CentOS 6.4 Comments Feed" href="http://www.unixmen.com/setup-streaming-media-server-ampache/feed/" />
+<link rel='stylesheet' id='roster_slider_headcss-css'  href='http://180016988.r.cdn77.net/wp-content/plugins/roster-slider/css/skins/default/style.css?ver=1.6.2' type='text/css' media='all' />
+<link rel='stylesheet' id='wordpress-popular-posts-css'  href='http://180016988.r.cdn77.net/wp-content/plugins/wordpress-popular-posts/style/wpp.css?ver=2.3.7' type='text/css' media='all' />
+<link rel='stylesheet' id='contact-form-7-css'  href='http://180016988.r.cdn77.net/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=3.5.3' type='text/css' media='all' />
+<link rel='stylesheet' id='arevico_scsfbcss-css'  href='http://180016988.r.cdn77.net/wp-content/plugins/facebook-page-promoter-lightbox-premium/scs/scs.css?ver=3.6.1' type='text/css' media='all' />
+<link rel='stylesheet' id='social-widget-css'  href='http://180016988.r.cdn77.net/wp-content/plugins/social-media-widget/social_widget.css?ver=3.6.1' type='text/css' media='all' />
+<link rel='stylesheet' id='vye_dynamic-css'  href='http://180016988.r.cdn77.net/wp-content/plugins/youtube-embed/css/main.min.css?ver=3.6.1' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-syntax-css-css'  href='http://180016988.r.cdn77.net/wp-content/plugins/wp-syntax/css/wp-syntax.css?ver=1.0' type='text/css' media='all' />
+<link rel='stylesheet' id='fancybox-css'  href='http://180016988.r.cdn77.net/wp-content/plugins/easy-fancybox/fancybox/jquery.fancybox-1.3.5.pack.css?ver=1.5.5' type='text/css' media='screen' />
+<link rel='stylesheet' id='wp-advanced-rp-css-css'  href='http://180016988.r.cdn77.net/wp-content/plugins/advanced-recent-posts-widget/css/advanced-recent-posts-widget.css?ver=3.6.1' type='text/css' media='all' />
+<script type='text/javascript' src='http://180016988.r.cdn77.net/wp-includes/js/jquery/jquery.js?ver=1.10.2'></script>
+<script type='text/javascript' src='http://180016988.r.cdn77.net/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='http://180016988.r.cdn77.net/wp-content/plugins/roster-slider/js/jquery.cycle.js?ver=1.6.2'></script>
+<script type='text/javascript' src='http://180016988.r.cdn77.net/wp-content/plugins/roster-slider/js/jquery.touchwipe.js?ver=1.6.2'></script>
+<script type='text/javascript' src='http://180016988.r.cdn77.net/wp-content/plugins/sharebar/js/sharebar.js?ver=3.6.1'></script>
+<script type='text/javascript' src='http://180016988.r.cdn77.net/wp-includes/js/comment-reply.min.js?ver=3.6.1'></script>
+<script type='text/javascript' src='http://180016988.r.cdn77.net/wp-content/plugins/facebook-page-promoter-lightbox-premium/scs/scs.js?ver=3.6.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var lb_l_ret = {"fb_id":"272714361685","display_on_page":"1","display_on_post":"1","display_on_homepage":"1","display_on_archive":"1","show_once":"60","delay":"4000","fblocale":"","width":"400","height":"250","fbcolorscheme":"light","facebookheader":"1","overlaycolor":"#696969","overlayop":"0.6","extracss":"","eam":"1","appid":"299189138898","hideonlike":"1","connect":"1","cmessage":"Already a fan?","gaevent":"1","mobile":"1","mab":"","fancybox":"","loggedin":"","scompat":""};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://180016988.r.cdn77.net/wp-content/plugins/facebook-page-promoter-lightbox-premium/js/launch_extended.js?ver=3.6.1'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.unixmen.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://180016988.r.cdn77.net/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 3.6.1" />
+<link rel='shortlink' href='http://www.unixmen.com/?p=19437' />
+
+<!-- This site is using AdRotate v3.8.7 Professional to display their advertisements - http://www.adrotateplugin.com/ -->
+<link rel="stylesheet" href="http://180016988.r.cdn77.net/wp-content/plugins/sharebar/css/sharebar.css" type="text/css" media="screen" />
+<script type="text/javascript">jQuery(document).ready(function($) { $('.sharebar').sharebar({horizontal:'true',swidth:'65',minwidth:2000,position:'left',leftOffset:20,rightOffset:10}); });</script>
+<!-- Sharebar Plugin by Monjurul Dolon (http://mdolon.com/) - more info at: http://devgrow.com/sharebar-wordpress-plugin -->
+<style type="text/css" id="custom-background-css">
+body.custom-background { background-color: #1e73be; }
+</style>
+
+	<!-- Easy FancyBox 1.5.5 using FancyBox 1.3.5 - RavanH (http://status301.net/wordpress-plugins/easy-fancybox/) -->
+<!--[if lt IE 8]>            
+<style type="text/css">
+/* IE6 */
+.fancybox-ie6 #fancybox-close{background:transparent;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://180016988.r.cdn77.net/wp-content/plugins/easy-fancybox/fancybox/fancy_close.png",sizingMethod="scale")}
+.fancybox-ie6 #fancybox-left-ico{background:transparent;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://180016988.r.cdn77.net/wp-content/plugins/easy-fancybox/fancybox/fancy_nav_left.png",sizingMethod="scale")}
+.fancybox-ie6 #fancybox-right-ico{background:transparent;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://180016988.r.cdn77.net/wp-content/plugins/easy-fancybox/fancybox/fancy_nav_right.png",sizingMethod="scale")}
+.fancybox-ie6 #fancybox-title-over{background:transparent;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://180016988.r.cdn77.net/wp-content/plugins/easy-fancybox/fancybox/fancy_title_over.png",sizingMethod="scale");zoom:1}
+.fancybox-ie6 #fancybox-title-float-left{background:transparent;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://180016988.r.cdn77.net/wp-content/plugins/easy-fancybox/fancybox/fancy_title_left.png",sizingMethod="scale")}
+.fancybox-ie6 #fancybox-title-float-main{background:transparent;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://180016988.r.cdn77.net/wp-content/plugins/easy-fancybox/fancybox/fancy_title_main.png",sizingMethod="scale")}
+.fancybox-ie6 #fancybox-title-float-right{background:transparent;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://180016988.r.cdn77.net/wp-content/plugins/easy-fancybox/fancybox/fancy_title_right.png",sizingMethod="scale")}
+.fancybox-ie6 #fancybox-bg-w,.fancybox-ie6 #fancybox-bg-e,.fancybox-ie6 #fancybox-left,.fancybox-ie6 #fancybox-right,#fancybox-hide-sel-frame{height:expression(this.parentNode.clientHeight+"px")}
+#fancybox-loading.fancybox-ie6{position:absolute;margin-top:0;top:expression((-20+(document.documentElement.clientHeight ? document.documentElement.clientHeight/2 : document.body.clientHeight/2)+(ignoreMe=document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop))+"px")}
+#fancybox-loading.fancybox-ie6 div{background:transparent;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://180016988.r.cdn77.net/wp-content/plugins/easy-fancybox/fancybox/fancy_loading.png", sizingMethod="scale")}
+/* IE6, IE7 */
+.fancybox-ie .fancybox-bg{background:transparent !important}
+.fancybox-ie #fancybox-bg-n{filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://180016988.r.cdn77.net/wp-content/plugins/easy-fancybox/fancybox/fancy_shadow_n.png",sizingMethod="scale")}
+.fancybox-ie #fancybox-bg-ne{filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://180016988.r.cdn77.net/wp-content/plugins/easy-fancybox/fancybox/fancy_shadow_ne.png",sizingMethod="scale")}
+.fancybox-ie #fancybox-bg-e{filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://180016988.r.cdn77.net/wp-content/plugins/easy-fancybox/fancybox/fancy_shadow_e.png",sizingMethod="scale")}
+.fancybox-ie #fancybox-bg-se{filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://180016988.r.cdn77.net/wp-content/plugins/easy-fancybox/fancybox/fancy_shadow_se.png",sizingMethod="scale")}
+.fancybox-ie #fancybox-bg-s{filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://180016988.r.cdn77.net/wp-content/plugins/easy-fancybox/fancybox/fancy_shadow_s.png",sizingMethod="scale")}
+.fancybox-ie #fancybox-bg-sw{filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://180016988.r.cdn77.net/wp-content/plugins/easy-fancybox/fancybox/fancy_shadow_sw.png",sizingMethod="scale")}
+.fancybox-ie #fancybox-bg-w{filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://180016988.r.cdn77.net/wp-content/plugins/easy-fancybox/fancybox/fancy_shadow_w.png",sizingMethod="scale")}
+.fancybox-ie #fancybox-bg-nw{filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://180016988.r.cdn77.net/wp-content/plugins/easy-fancybox/fancybox/fancy_shadow_nw.png",sizingMethod="scale")}
+</style>
+<![endif]-->
+<!--[if IE 8]>            
+<style type="text/css">
+.fancybox-ie .fancybox-bg{background:transparent !important}
+.fancybox-ie #fancybox-bg-n{-ms-filter:'progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://180016988.r.cdn77.net/wp-content/plugins/easy-fancybox/fancybox/fancy_shadow_n.png",sizingMethod="scale")'}
+.fancybox-ie #fancybox-bg-ne{-ms-filter:'progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://180016988.r.cdn77.net/wp-content/plugins/easy-fancybox/fancybox/fancy_shadow_ne.png",sizingMethod="scale")'}
+.fancybox-ie #fancybox-bg-e{-ms-filter:'progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://180016988.r.cdn77.net/wp-content/plugins/easy-fancybox/fancybox/fancy_shadow_e.png",sizingMethod="scale")'}
+.fancybox-ie #fancybox-bg-se{-ms-filter:'progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://180016988.r.cdn77.net/wp-content/plugins/easy-fancybox/fancybox/fancy_shadow_se.png",sizingMethod="scale")'}
+.fancybox-ie #fancybox-bg-s{-ms-filter:'progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://180016988.r.cdn77.net/wp-content/plugins/easy-fancybox/fancybox/fancy_shadow_s.png",sizingMethod="scale")'}
+.fancybox-ie #fancybox-bg-sw{-ms-filter:'progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://180016988.r.cdn77.net/wp-content/plugins/easy-fancybox/fancybox/fancy_shadow_sw.png",sizingMethod="scale")'}
+.fancybox-ie #fancybox-bg-w{-ms-filter:'progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://180016988.r.cdn77.net/wp-content/plugins/easy-fancybox/fancybox/fancy_shadow_w.png",sizingMethod="scale")'}
+.fancybox-ie #fancybox-bg-nw{-ms-filter:'progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://180016988.r.cdn77.net/wp-content/plugins/easy-fancybox/fancybox/fancy_shadow_nw.png",sizingMethod="scale")'}
+</style>
+<![endif]-->
+
+	<script type="text/javascript">
+	/* <![CDATA[ */
+	var fb_timeout = null;
+	var fb_opts = { 'overlayShow' : true, 'hideOnOverlayClick' : true, 'showCloseButton' : true, 'centerOnScroll' : true, 'enableEscapeButton' : true, 'autoScale' : true };
+	var easy_fancybox_handler = function(){
+	/* IMG */
+	var fb_IMG_select = 'a[href*=".jpg"]:not(.nofancybox), area[href*=".jpg"]:not(.nofancybox), a[href*=".jpeg"]:not(.nofancybox), area[href*=".jpeg"]:not(.nofancybox), a[href*=".png"]:not(.nofancybox), area[href*=".png"]:not(.nofancybox)';
+	jQuery(fb_IMG_select).addClass('fancybox');
+	var fb_IMG_sections = jQuery('div.gallery');
+	fb_IMG_sections.each(function() { jQuery(this).find(fb_IMG_select).attr('rel', 'gallery-' + fb_IMG_sections.index(this)); });
+	jQuery('a.fancybox, area.fancybox, li.fancybox a:not(li.nofancybox a)').fancybox( jQuery.extend({}, fb_opts, { 'transitionIn' : 'elastic', 'easingIn' : 'easeOutBack', 'transitionOut' : 'elastic', 'easingOut' : 'easeInBack', 'opacity' : false, 'hideOnContentClick' : true, 'titleShow' : true, 'titlePosition' : 'over', 'titleFromAlt' : true, 'showNavArrows' : true, 'enableKeyboardNav' : true, 'cyclic' : false }) );
+	/* Inline */
+	jQuery('a.fancybox-inline, area.fancybox-inline, li.fancybox-inline a:not(li.nofancybox-inline a)').fancybox( jQuery.extend({}, fb_opts, { 'type' : 'inline', 'autoDimensions' : true, 'scrolling' : 'no', 'easingIn' : 'easeOutBack', 'easingOut' : 'easeInBack', 'opacity' : false, 'hideOnContentClick' : false }) );
+	/* YouTube */
+	jQuery('a[href*="youtube.com/watch"]:not(.nofancybox), area[href*="youtube.com/watch"]:not(.nofancybox)').addClass('fancybox-youtube');
+	jQuery('a[href*="youtu.be/"]:not(.nofancybox), area[href*="youtu.be/"]:not(.nofancybox)').addClass('fancybox-youtube');
+	jQuery('a.fancybox-youtube, area.fancybox-youtube, li.fancybox-youtube a:not(li.nofancybox a)').fancybox( jQuery.extend({}, fb_opts, { 'type' : 'iframe', 'width' : 640, 'height' : 360, 'titleShow' : false, 'titlePosition' : 'float', 'titleFromAlt' : true, 'onStart' : function(selectedArray, selectedIndex, selectedOpts) { selectedOpts.href = selectedArray[selectedIndex].href.replace(new RegExp('youtu.be', 'i'), 'www.youtube.com/embed').replace(new RegExp('watch\\?(.*)v=([a-z0-9\_\-]+)(&|\\?)?(.*)', 'i'), 'embed/$2?$1$4') } }) );
+	/* Vimeo */
+	jQuery('a[href*="vimeo.com/"]:not(.nofancybox), area[href*="vimeo.com/"]:not(.nofancybox)').addClass('fancybox-vimeo');
+	jQuery('a.fancybox-vimeo, area.fancybox-vimeo, li.fancybox-vimeo a:not(li.nofancybox a)').fancybox( jQuery.extend({}, fb_opts, { 'type' : 'iframe', 'width' : 500, 'height' : 281, 'titleShow' : false, 'titlePosition' : 'float', 'titleFromAlt' : true, 'onStart' : function(selectedArray, selectedIndex, selectedOpts) { selectedOpts.href = selectedArray[selectedIndex].href.replace(new RegExp('http://(www\.)?vimeo\.com/([0-9]+)(&|\\?)?(.*)', 'i'), 'http://player.vimeo.com/video/$2?$4') } }) );
+	/* iFrame */
+	jQuery('a.fancybox-iframe, area.fancybox-iframe, li.fancybox-iframe a:not(li.nofancybox a)').fancybox( jQuery.extend({}, fb_opts, { 'type' : 'iframe', 'scrolling' : 'auto', 'width' : '70%', 'height' : '90%', 'padding' : 0, 'titleShow' : false, 'titlePosition' : 'float', 'titleFromAlt' : true }) );
+	/* Auto-click */ 
+	jQuery('#fancybox-auto').trigger('click');
+	}
+	/* ]]> */
+	</script>
+	<style type="text/css">.fancybox-hidden{display:none}.rtl #fancybox-left{left:auto;right:0px}.rtl #fancybox-right{left:0px;right:auto}.rtl #fancybox-right-ico{background-position:-40px -30px}.rtl #fancybox-left-ico{background-position:-40px -60px}.rtl .fancybox-title-over{text-align:right}.rtl #fancybox-left-ico,.rtl #fancybox-right-ico{right:-9999px}.rtl #fancybox-right:hover span{right:auto;left:20px}.rtl #fancybox-left:hover span{right:20px}#fancybox-img{max-width:none;max-height:none}#fancybox-outer{background-color:#fff}#fancybox-content{border-color:#fff}#fancybox-content{color:inherit}</style>
+	<script type="text/javascript" src="http://180016988.r.cdn77.net/wp-content/themes/unimax/js/bookmarkscroll.js"></script>
+</head>
+
+<body>
+
+        <!-- BuySellAds.com Ad Code -->
+        <script type="text/javascript">
+        (function(){
+          var bsa = document.createElement('script');
+              bsa.type= 'text/javascript';
+              bsa.async = true;
+              bsa.src='//s3.buysellads.com/ac/bsa.js';
+          (document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(bsa);
+        })();
+        </script>
+        <!-- END BuySellAds.com Ad Code --> 
+      
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div class="mainBox">
+<div class="mainDiv">
+<div class="hdSec">
+    <div class="date">
+    <time datetime="2012-05-09">
+    <p id="current-date-time">Friday, November 15, 9:42 pm</p>    </time>
+    <div class="menu-top-menu-container"><ul id="menu-top-menu" class="menu"><li id="menu-item-16454" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-16454"><a href="http://www.unixmen.com/about-us/" >About Us</a></li>
+<li id="menu-item-7349" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7349"><a href="http://www.unixmen.com/advertising/" >Advertising</a></li>
+<li id="menu-item-7347" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7347"><a href="http://www.unixmen.com/sitemap/" >Sitemap</a></li>
+<li id="menu-item-7702" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7702"><a href="http://www.unixmen.com/privacy-policy/" >Privacy</a></li>
+<li id="menu-item-7703" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7703"><a href="http://www.unixmen.com/contact-us/" >Contact Us</a></li>
+</ul></div>    </div>
+    
+    <div class="iconBox">
+     			<div class="textwidget"><a href="http://www.facebook.com/pages/Unixmen/272714361685" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://www.facebook.com']);"><img src="http://180016988.r.cdn77.net/wp-content/themes/unimax/images/facebook.png" alt="" /></a>
+    <a href="https://plus.google.com/110820376491877300065/posts" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://plus.google.com']);"><img src="http://180016988.r.cdn77.net/wp-content/themes/unimax/images/googleplus.png" alt="" /></a>
+    <a href="http://twitter.com/unixmen" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://twitter.com']);"><img src="http://180016988.r.cdn77.net/wp-content/themes/unimax/images/twitter.png" alt="" /></a>
+    <a href="http://feeds.feedburner.com/unixmenhowtos" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://feeds.feedburner.com']);"><img src="http://180016988.r.cdn77.net/wp-content/themes/unimax/images/rss.png" alt="" /></a>
+    <a href="http://feedburner.google.com/fb/a/mailverify?uri=unixmenhowtos&loc=en_US" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://feedburner.google.com']);" class="messge"><img src="http://180016988.r.cdn77.net/wp-content/themes/unimax/images/email.png" alt="" /></a></div>
+		    
+    </div>
+  </div>
+  
+  <div class="headerbar">
+    <div class="logo"><img src="http://180016988.r.cdn77.net/wp-content/themes/unimax/images/logo.png" alt="Logo" /></div>
+    <div class="penguins"><img src="http://180016988.r.cdn77.net/wp-content/themes/unimax/images/penguins.png" alt="" /></div>
+  </div>
+  
+  <div class="mnuBox">
+  <div id="access" role="navigation">
+      <div class="menu-menu-container"><ul id="menu-menu" class="menu"><li id="menu-item-12" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-12"><a href="http://www.unixmen.com/" >Home</a></li>
+<li id="menu-item-11" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor menu-item-11"><a href="http://www.unixmen.com/category/news/" >News</a></li>
+<li id="menu-item-2413" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor menu-item-2413"><a href="http://www.unixmen.com/category/linux-distributions/" ><img src="http://180016988.r.cdn77.net/wp-content/uploads/icons/linux.png" alt="" /><span><strong>Linux</strong><br />Distributions</span></a>
+<ul class="sub-menu">
+	<li id="menu-item-26" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-26"><a href="http://www.unixmen.com/category/linux-distributions/archlinux-2/" ><img src="http://180016988.r.cdn77.net/wp-content/uploads/icons/archlinux.png" alt="" />Arch Linux</a></li>
+	<li id="menu-item-27" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-27"><a href="http://www.unixmen.com/category/linux-distributions/centos/" ><img src="http://180016988.r.cdn77.net/wp-content/uploads/icons/centos.png" alt="" />CentOS</a></li>
+	<li id="menu-item-14" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-14"><a href="http://www.unixmen.com/category/linux-distributions/fedora/" ><img src="http://180016988.r.cdn77.net/wp-content/uploads/icons/fedora.png" alt="" />Fedora</a></li>
+	<li id="menu-item-15" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-15"><a href="http://www.unixmen.com/category/linux-distributions/linux-mint/" ><img src="http://180016988.r.cdn77.net/wp-content/uploads/icons/linuxmint.png" alt="" />Linux Mint</a></li>
+	<li id="menu-item-28" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-28"><a href="http://www.unixmen.com/category/linux-distributions/suse/" ><img src="http://180016988.r.cdn77.net/wp-content/uploads/icons/suse.png" alt="" />Suse</a></li>
+	<li id="menu-item-16" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-16"><a href="http://www.unixmen.com/category/linux-distributions/ubuntu/" ><img src="http://180016988.r.cdn77.net/wp-content/uploads/icons/ubuntu.png" alt="" />Ubuntu</a></li>
+	<li id="menu-item-2414" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2414"><a href="http://www.unixmen.com/category/linux-distributions/" ><img src="http://180016988.r.cdn77.net/wp-content/uploads/icons/linux.png" alt="" />Other Linux Distros</a></li>
+</ul>
+</li>
+<li id="menu-item-13" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-13"><a href="http://www.unixmen.com/category/linux-tutorials/" ><span><strong>Tutorials</strong><br />Knowledge Base</span></a>
+<ul class="sub-menu">
+	<li id="menu-item-3027" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-3027"><a href="http://www.unixmen.com/category/linux-tutorials/" >Tutorials &#038; Howtos</a></li>
+	<li id="menu-item-22" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-22"><a href="http://www.unixmen.com/category/linux-tutorials/hardware-linux/" >Hardware Linux</a></li>
+	<li id="menu-item-23" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-23"><a href="http://www.unixmen.com/category/linux-tutorials/linux-command/" >linux command</a></li>
+	<li id="menu-item-24" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-24"><a href="http://www.unixmen.com/category/linux-tutorials/linux-tutorials-video/" >Video Tutorials</a></li>
+	<li id="menu-item-25" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-25"><a href="http://www.unixmen.com/category/linux-tutorials/unix-tutorials/" >Unix Tutorials</a></li>
+</ul>
+</li>
+<li id="menu-item-17" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-17"><a href="http://www.unixmen.com/category/opensource/" ><img src="http://180016988.r.cdn77.net/wp-content/uploads/icons/opensource.png" alt="" />Opensource</a>
+<ul class="sub-menu">
+	<li id="menu-item-19" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-19"><a href="http://www.unixmen.com/category/gaming-on-linux/" >Gaming On Linux</a></li>
+	<li id="menu-item-20" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-20"><a href="http://www.unixmen.com/category/news/software/" >Software</a></li>
+</ul>
+</li>
+<li id="menu-item-18" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-18"><a href="http://www.unixmen.com/category/linux-distributions/android/" ><img src="http://180016988.r.cdn77.net/wp-content/uploads/icons/android.png" alt="" />Android</a></li>
+<li id="menu-item-21" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-21"><a href="http://www.unixmen.com/category/frequently-asked-questions/" ><img src="http://180016988.r.cdn77.net/wp-content/uploads/icons/faq.png" alt="" />FAQs</a></li>
+<li id="menu-item-5043" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5043"><a title="ASK Unixmen" href="http://ask.unixmen.com/" ><img src="http://180016988.r.cdn77.net/wp-content/uploads/icons/forum.png" alt="" />Q/A Forum</a></li>
+</ul></div>  </div>
+  <div id="searchbox">
+  <form action="http://www.unixmen.com/search/" id="searchform">
+  <div>
+    <input type="hidden" name="cx" value="partner-pub-2917661377128354:0493260722" />
+    <input type="hidden" name="cof" value="FORID:11" />
+    <input type="hidden" name="ie" value="UTF-8" />
+    <input type="text" name="q" size="30" />
+    <input type="submit" id="searchsubmit" name="sa" value="Search" />
+  </div>
+</form>
+<script type="text/javascript" src="http://www.google.com/cse/brand?form=searchform&lang=en"></script>  </div>
+  </div>
+
+  <div class="carocel"><script type="text/javascript"> jQuery("html").addClass("roster_slider_fouc"); jQuery(document).ready(function() {
+	   jQuery(".roster_slider_fouc .roster_slider").css({"display" : "block"});
+	});function roster_slider_1_pause() { jQuery("#roster_slider_1").cycle("pause"); };
+		jQuery(document).ready(function() {
+			jQuery("#roster_slider_1").cycle({
+				fx: "fade",
+				easing:"swing",
+				speed:"1000",
+				timeout: 3000,
+				onPrevNextEvent: roster_slider_1_pause,
+				onPagerEvent: roster_slider_1_pause,next:   "#roster_slider_1_next", prev:   "#roster_slider_1_prev",
+				pause: 1
+			});
+			jQuery("#roster_slider_1").touchwipe({
+				wipeLeft: function() {
+					jQuery("#roster_slider_1").cycle("next");
+				},
+				wipeRight: function() {
+					jQuery("#roster_slider_1").cycle("prev");
+				},
+				preventDefaultEvents: false
+			});
+		});</script> <noscript><p><strong>This page is having a slideshow that uses Javascript. Your browser either doesn't support Javascript or you have it turned off. To see this page as it is meant to appear please use a Javascript enabled browser.</strong></p></noscript><div class="roster_slider roster_slider_set" style="width:852px;padding:0 24px;">
+		<div id="roster_slider_1" class="roster_slider_instance">
+				<div class="roster_slide" >
+			<!-- roster_slide --><div class="roster_slideri" style="background-color:transparent;border:1px solid #dddddd;width:120px;height:180px;">
+			<!-- roster_slideri --><a href="http://www.unixmen.com/syncdrive-google-drive-client-ubuntu-derivatives/" title="SyncDrive: Google Drive Client For Ubuntu And It&#8217;s Derivatives" ><img src="http://180016988.r.cdn77.net/wp-content/uploads/2013/11/photo.jpg.png" alt="SyncDrive: Google Drive Client For Ubuntu And It&#8217;s Derivatives" class="slider_thumbnail full roster_slider_thumbnail" width="110" style="float:none;margin:0 0px 0 0px;max-height:90px;border:0px solid #D8E7EE;width:110px;" /></a><h2 style="clear:none;line-height:15px;font-family:Georgia,serif;font-size:12px;font-weight:normal;font-style:normal;color:#0067B7;margin:0 0 5px 0;"><a href="http://www.unixmen.com/syncdrive-google-drive-client-ubuntu-derivatives/" style="color:#0067B7;" >SyncDrive: Google Drive Client For Ubuntu And It's Derivatives</a></h2>	<!-- /roster_slideri -->
+			</div><div class="roster_slideri" style="background-color:transparent;border:1px solid #dddddd;width:120px;height:180px;">
+			<!-- roster_slideri --><a href="http://www.unixmen.com/install-java-slackware-14-1/" title="Install Java On Slackware 14.1" ><img src="http://180016988.r.cdn77.net/wp-content/uploads/2012/10/java_logo.jpg" alt="Install Java On Slackware 14.1" class="slider_thumbnail full roster_slider_thumbnail" width="110" style="float:none;margin:0 0px 0 0px;max-height:90px;border:0px solid #D8E7EE;width:110px;" /></a><h2 style="clear:none;line-height:15px;font-family:Georgia,serif;font-size:12px;font-weight:normal;font-style:normal;color:#0067B7;margin:0 0 5px 0;"><a href="http://www.unixmen.com/install-java-slackware-14-1/" style="color:#0067B7;" >Install Java On Slackware 14.1 </a></h2>	<!-- /roster_slideri -->
+			</div><div class="roster_slideri" style="background-color:transparent;border:1px solid #dddddd;width:120px;height:180px;">
+			<!-- roster_slideri --><a href="http://www.unixmen.com/install-slackware-14-1-step-step/" title="How To Install Slackware 14.1 Step By Step" ><img src="http://180016988.r.cdn77.net/wp-content/uploads/2013/11/Slackware.png" alt="How To Install Slackware 14.1 Step By Step" class="slider_thumbnail full roster_slider_thumbnail" width="110" style="float:none;margin:0 0px 0 0px;max-height:90px;border:0px solid #D8E7EE;width:110px;" /></a><h2 style="clear:none;line-height:15px;font-family:Georgia,serif;font-size:12px;font-weight:normal;font-style:normal;color:#0067B7;margin:0 0 5px 0;"><a href="http://www.unixmen.com/install-slackware-14-1-step-step/" style="color:#0067B7;" >How To Install Slackware 14.1 Step By Step</a></h2>	<!-- /roster_slideri -->
+			</div><div class="roster_slideri" style="background-color:transparent;border:1px solid #dddddd;width:120px;height:180px;">
+			<!-- roster_slideri --><a href="http://www.unixmen.com/five-examples-ping-utility/" title="Five Examples Of The ping Utility" ><img src="http://180016988.r.cdn77.net/wp-content/uploads/2013/07/linux-200x200.jpg" alt="Five Examples Of The ping Utility" class="slider_thumbnail full roster_slider_thumbnail" width="110" style="float:none;margin:0 0px 0 0px;max-height:90px;border:0px solid #D8E7EE;width:110px;" /></a><h2 style="clear:none;line-height:15px;font-family:Georgia,serif;font-size:12px;font-weight:normal;font-style:normal;color:#0067B7;margin:0 0 5px 0;"><a href="http://www.unixmen.com/five-examples-ping-utility/" style="color:#0067B7;" >Five Examples Of The ping Utility</a></h2>	<!-- /roster_slideri -->
+			</div><div class="roster_slideri" style="background-color:transparent;border:1px solid #dddddd;width:120px;height:180px;">
+			<!-- roster_slideri --><a href="http://www.unixmen.com/dnf-experimental-replacement-yum/" title="DNF: An Experimental Replacement For YUM" ><img src="http://180016988.r.cdn77.net/wp-content/uploads/2013/11/Fedora_logo.png" alt="DNF: An Experimental Replacement For YUM" class="slider_thumbnail full roster_slider_thumbnail" width="110" style="float:none;margin:0 0px 0 0px;max-height:90px;border:0px solid #D8E7EE;width:110px;" /></a><h2 style="clear:none;line-height:15px;font-family:Georgia,serif;font-size:12px;font-weight:normal;font-style:normal;color:#0067B7;margin:0 0 5px 0;"><a href="http://www.unixmen.com/dnf-experimental-replacement-yum/" style="color:#0067B7;" >DNF: An Experimental Replacement For YUM</a></h2>	<!-- /roster_slideri -->
+			</div></div><!-- /roster_slide --><div class="roster_slide" >
+			<!-- roster_slide --><div class="roster_slideri" style="background-color:transparent;border:1px solid #dddddd;width:120px;height:180px;">
+			<!-- roster_slideri --><a href="http://www.unixmen.com/fedora-20-heisenbug-beta/" title="Fedora 20 &#8220;Heisenbug&#8221; Beta Is Out!" ><img src="http://180016988.r.cdn77.net/wp-content/uploads/2013/07/fedora_infinity-200x150.jpg" alt="Fedora 20 &#8220;Heisenbug&#8221; Beta Is Out!" class="slider_thumbnail full roster_slider_thumbnail" width="110" style="float:none;margin:0 0px 0 0px;max-height:90px;border:0px solid #D8E7EE;width:110px;" /></a><h2 style="clear:none;line-height:15px;font-family:Georgia,serif;font-size:12px;font-weight:normal;font-style:normal;color:#0067B7;margin:0 0 5px 0;"><a href="http://www.unixmen.com/fedora-20-heisenbug-beta/" style="color:#0067B7;" >Fedora 20 Heisenbug Beta Is Out!</a></h2>	<!-- /roster_slideri -->
+			</div><div class="roster_slideri" style="background-color:transparent;border:1px solid #dddddd;width:120px;height:180px;">
+			<!-- roster_slideri --><a href="http://www.unixmen.com/install-picapy-picasa-web-app-ubuntu-derivates/" title="Install Picapy, Picasa Web App in Ubuntu And It&#8217;s Derivates" ><img src="http://180016988.r.cdn77.net/wp-content/uploads/2013/11/picapy-logo.png" alt="Install Picapy, Picasa Web App in Ubuntu And It&#8217;s Derivates" class="slider_thumbnail full roster_slider_thumbnail" width="110" style="float:none;margin:0 0px 0 0px;max-height:90px;border:0px solid #D8E7EE;width:110px;" /></a><h2 style="clear:none;line-height:15px;font-family:Georgia,serif;font-size:12px;font-weight:normal;font-style:normal;color:#0067B7;margin:0 0 5px 0;"><a href="http://www.unixmen.com/install-picapy-picasa-web-app-ubuntu-derivates/" style="color:#0067B7;" >Install Picapy, Picasa Web App in Ubuntu And It's Derivates</a></h2>	<!-- /roster_slideri -->
+			</div><div class="roster_slideri" style="background-color:transparent;border:1px solid #dddddd;width:120px;height:180px;">
+			<!-- roster_slideri --><a href="http://www.unixmen.com/firefox-25-released/" title="Firefox 25 Has Been Released!" ><img src="http://180016988.r.cdn77.net/wp-content/uploads/2013/11/firefox-logo.png" alt="Firefox 25 Has Been Released!" class="slider_thumbnail full roster_slider_thumbnail" width="110" style="float:none;margin:0 0px 0 0px;max-height:90px;border:0px solid #D8E7EE;width:110px;" /></a><h2 style="clear:none;line-height:15px;font-family:Georgia,serif;font-size:12px;font-weight:normal;font-style:normal;color:#0067B7;margin:0 0 5px 0;"><a href="http://www.unixmen.com/firefox-25-released/" style="color:#0067B7;" >Firefox 25 Has Been Released!</a></h2>	<!-- /roster_slideri -->
+			</div><div class="roster_slideri" style="background-color:transparent;border:1px solid #dddddd;width:120px;height:180px;">
+			<!-- roster_slideri --><a href="http://www.unixmen.com/install-opera-12-16-ubuntu-13-10/" title="Install Opera 12.16 in Ubuntu 13.10" ><img src="http://180016988.r.cdn77.net/wp-content/uploads/2013/10/opera-browser-Logo.png" alt="Install Opera 12.16 in Ubuntu 13.10" class="slider_thumbnail full roster_slider_thumbnail" width="110" style="float:none;margin:0 0px 0 0px;max-height:90px;border:0px solid #D8E7EE;width:110px;" /></a><h2 style="clear:none;line-height:15px;font-family:Georgia,serif;font-size:12px;font-weight:normal;font-style:normal;color:#0067B7;margin:0 0 5px 0;"><a href="http://www.unixmen.com/install-opera-12-16-ubuntu-13-10/" style="color:#0067B7;" >Install Opera 12.16 in Ubuntu 13.10</a></h2>	<!-- /roster_slideri -->
+			</div><div class="roster_slideri" style="background-color:transparent;border:1px solid #dddddd;width:120px;height:180px;">
+			<!-- roster_slideri --><a href="http://www.unixmen.com/geary-0-4-1-released/" title="Geary 0.4.1 Has Been Released!" ><img src="http://180016988.r.cdn77.net/wp-content/uploads/2013/11/Geary-logo.png" alt="Geary 0.4.1 Has Been Released!" class="slider_thumbnail full roster_slider_thumbnail" width="110" style="float:none;margin:0 0px 0 0px;max-height:90px;border:0px solid #D8E7EE;width:110px;" /></a><h2 style="clear:none;line-height:15px;font-family:Georgia,serif;font-size:12px;font-weight:normal;font-style:normal;color:#0067B7;margin:0 0 5px 0;"><a href="http://www.unixmen.com/geary-0-4-1-released/" style="color:#0067B7;" >Geary 0.4.1 Has Been Released!</a></h2>	<!-- /roster_slideri -->
+			</div></div><!-- /roster_slide --><div class="roster_slide" >
+			<!-- roster_slide --><div class="roster_slideri" style="background-color:transparent;border:1px solid #dddddd;width:120px;height:180px;">
+			<!-- roster_slideri --><a href="http://www.unixmen.com/install-youtube-dl-crunchbang/" title="How To Install Youtube-dl In Crunchbang" ><img src="http://180016988.r.cdn77.net/wp-content/uploads/2012/07/youtube.png" alt="How To Install Youtube-dl In Crunchbang" class="slider_thumbnail full roster_slider_thumbnail" width="110" style="float:none;margin:0 0px 0 0px;max-height:90px;border:0px solid #D8E7EE;width:110px;" /></a><h2 style="clear:none;line-height:15px;font-family:Georgia,serif;font-size:12px;font-weight:normal;font-style:normal;color:#0067B7;margin:0 0 5px 0;"><a href="http://www.unixmen.com/install-youtube-dl-crunchbang/" style="color:#0067B7;" >How To Install Youtube-dl In Crunchbang</a></h2>	<!-- /roster_slideri -->
+			</div><div class="roster_slideri" style="background-color:transparent;border:1px solid #dddddd;width:120px;height:180px;">
+			<!-- roster_slideri --><a href="http://www.unixmen.com/turn-ubuntu-laptop-wifi-hotspot/" title="Turn Ubuntu Laptop Into A WiFi-Hotspot" ><img src="http://180016988.r.cdn77.net/wp-content/uploads/2013/11/hotspot.png" alt="Turn Ubuntu Laptop Into A WiFi-Hotspot" class="slider_thumbnail full roster_slider_thumbnail" width="110" style="float:none;margin:0 0px 0 0px;max-height:90px;border:0px solid #D8E7EE;width:110px;" /></a><h2 style="clear:none;line-height:15px;font-family:Georgia,serif;font-size:12px;font-weight:normal;font-style:normal;color:#0067B7;margin:0 0 5px 0;"><a href="http://www.unixmen.com/turn-ubuntu-laptop-wifi-hotspot/" style="color:#0067B7;" >Turn Ubuntu Laptop Into A WiFi-Hotspot</a></h2>	<!-- /roster_slideri -->
+			</div><div class="roster_slideri" style="background-color:transparent;border:1px solid #dddddd;width:120px;height:180px;">
+			<!-- roster_slideri --><a href="http://www.unixmen.com/recoll-text-searching-tool-linux-desktops/" title="Recoll: Text Search Tool For Unix And Linux Desktops" ><img src="http://180016988.r.cdn77.net/wp-content/uploads/2013/11/search.png" alt="Recoll: Text Search Tool For Unix And Linux Desktops" class="slider_thumbnail full roster_slider_thumbnail" width="110" style="float:none;margin:0 0px 0 0px;max-height:90px;border:0px solid #D8E7EE;width:110px;" /></a><h2 style="clear:none;line-height:15px;font-family:Georgia,serif;font-size:12px;font-weight:normal;font-style:normal;color:#0067B7;margin:0 0 5px 0;"><a href="http://www.unixmen.com/recoll-text-searching-tool-linux-desktops/" style="color:#0067B7;" >Recoll: Text Search Tool For Unix And Linux Desktops</a></h2>	<!-- /roster_slideri -->
+			</div><div class="roster_slideri" style="background-color:transparent;border:1px solid #dddddd;width:120px;height:180px;">
+			<!-- roster_slideri --><a href="http://www.unixmen.com/install-cinnamon-2-0-6-ubuntu/" title="Install Cinnamon 2.0.6 in Ubuntu" ><img src="http://180016988.r.cdn77.net/wp-content/uploads/2013/10/ubuntu.png" alt="Install Cinnamon 2.0.6 in Ubuntu" class="slider_thumbnail full roster_slider_thumbnail" width="110" style="float:none;margin:0 0px 0 0px;max-height:90px;border:0px solid #D8E7EE;width:110px;" /></a><h2 style="clear:none;line-height:15px;font-family:Georgia,serif;font-size:12px;font-weight:normal;font-style:normal;color:#0067B7;margin:0 0 5px 0;"><a href="http://www.unixmen.com/install-cinnamon-2-0-6-ubuntu/" style="color:#0067B7;" >Install Cinnamon 2.0.6 in Ubuntu</a></h2>	<!-- /roster_slideri -->
+			</div><div class="roster_slideri" style="background-color:transparent;border:1px solid #dddddd;width:120px;height:180px;">
+			<!-- roster_slideri --><a href="http://www.unixmen.com/kicad-create-professional-schematics-printed-circuit-boards/" title="KiCAD: Create Professional Schematics And Printed Circuit Boards" ><img src="http://180016988.r.cdn77.net/wp-content/uploads/2013/11/kicad.png" alt="KiCAD: Create Professional Schematics And Printed Circuit Boards" class="slider_thumbnail full roster_slider_thumbnail" width="110" style="float:none;margin:0 0px 0 0px;max-height:90px;border:0px solid #D8E7EE;width:110px;" /></a><h2 style="clear:none;line-height:15px;font-family:Georgia,serif;font-size:12px;font-weight:normal;font-style:normal;color:#0067B7;margin:0 0 5px 0;"><a href="http://www.unixmen.com/kicad-create-professional-schematics-printed-circuit-boards/" style="color:#0067B7;" >KiCAD: Create Professional Schematics And Printed Circuit Boards</a></h2>	<!-- /roster_slideri -->
+			</div></div><!-- /roster_slide --><div class="roster_slide" >
+			<!-- roster_slide --><div class="roster_slideri" style="background-color:transparent;border:1px solid #dddddd;width:120px;height:180px;">
+			<!-- roster_slideri --><a href="http://www.unixmen.com/slackware-linux-14-1-released/" title="Slackware Linux 14.1 Has Been Released" ><img src="http://180016988.r.cdn77.net/wp-content/uploads/2013/11/Slackware.png" alt="Slackware Linux 14.1 Has Been Released" class="slider_thumbnail full roster_slider_thumbnail" width="110" style="float:none;margin:0 0px 0 0px;max-height:90px;border:0px solid #D8E7EE;width:110px;" /></a><h2 style="clear:none;line-height:15px;font-family:Georgia,serif;font-size:12px;font-weight:normal;font-style:normal;color:#0067B7;margin:0 0 5px 0;"><a href="http://www.unixmen.com/slackware-linux-14-1-released/" style="color:#0067B7;" >Slackware Linux 14.1 Has Been Released</a></h2>	<!-- /roster_slideri -->
+			</div><div class="roster_slideri" style="background-color:transparent;border:1px solid #dddddd;width:120px;height:180px;">
+			<!-- roster_slideri --><a href="http://www.unixmen.com/pear-os-8-heen-released/" title="Pear OS 8 Has Been Released" ><img src="http://180016988.r.cdn77.net/wp-content/uploads/2013/09/pear-os.png" alt="Pear OS 8 Has Been Released" class="slider_thumbnail full roster_slider_thumbnail" width="110" style="float:none;margin:0 0px 0 0px;max-height:90px;border:0px solid #D8E7EE;width:110px;" /></a><h2 style="clear:none;line-height:15px;font-family:Georgia,serif;font-size:12px;font-weight:normal;font-style:normal;color:#0067B7;margin:0 0 5px 0;"><a href="http://www.unixmen.com/pear-os-8-heen-released/" style="color:#0067B7;" >Pear OS 8 Has Been Released</a></h2>	<!-- /roster_slideri -->
+			</div><div class="roster_slideri" style="background-color:transparent;border:1px solid #dddddd;width:120px;height:180px;">
+			<!-- roster_slideri --><a href="http://www.unixmen.com/ktouch-improve-touch-typing-skills-ubuntu/" title="KTouch: Improve Your Touch Typing Skills On Ubuntu" ><img src="http://180016988.r.cdn77.net/wp-content/uploads/2013/11/KTouch.png" alt="KTouch: Improve Your Touch Typing Skills On Ubuntu" class="slider_thumbnail full roster_slider_thumbnail" width="110" style="float:none;margin:0 0px 0 0px;max-height:90px;border:0px solid #D8E7EE;width:110px;" /></a><h2 style="clear:none;line-height:15px;font-family:Georgia,serif;font-size:12px;font-weight:normal;font-style:normal;color:#0067B7;margin:0 0 5px 0;"><a href="http://www.unixmen.com/ktouch-improve-touch-typing-skills-ubuntu/" style="color:#0067B7;" >KTouch: Improve Your Touch Typing Skills On Ubuntu</a></h2>	<!-- /roster_slideri -->
+			</div><div class="roster_slideri" style="background-color:transparent;border:1px solid #dddddd;width:120px;height:180px;">
+			<!-- roster_slideri --><a href="http://www.unixmen.com/learn-geography-kgeography-ubuntu/" title="Learn Geography With KGeography On Ubuntu" ><img src="http://180016988.r.cdn77.net/wp-content/uploads/2013/11/kgeography.png" alt="Learn Geography With KGeography On Ubuntu" class="slider_thumbnail full roster_slider_thumbnail" width="110" style="float:none;margin:0 0px 0 0px;max-height:90px;border:0px solid #D8E7EE;width:110px;" /></a><h2 style="clear:none;line-height:15px;font-family:Georgia,serif;font-size:12px;font-weight:normal;font-style:normal;color:#0067B7;margin:0 0 5px 0;"><a href="http://www.unixmen.com/learn-geography-kgeography-ubuntu/" style="color:#0067B7;" >Learn Geography With KGeography On Ubuntu</a></h2>	<!-- /roster_slideri -->
+			</div><div class="roster_slideri" style="background-color:transparent;border:1px solid #dddddd;width:120px;height:180px;">
+			<!-- roster_slideri --><a href="http://www.unixmen.com/linux-desktop-backup-made-easy-sbackup/" title="SBackup: A Simple Backup Solution For Your Linux Desktop" ><img src="http://180016988.r.cdn77.net/wp-content/uploads/2013/11/backup_icon.jpg" alt="SBackup: A Simple Backup Solution For Your Linux Desktop" class="slider_thumbnail full roster_slider_thumbnail" width="110" style="float:none;margin:0 0px 0 0px;max-height:90px;border:0px solid #D8E7EE;width:110px;" /></a><h2 style="clear:none;line-height:15px;font-family:Georgia,serif;font-size:12px;font-weight:normal;font-style:normal;color:#0067B7;margin:0 0 5px 0;"><a href="http://www.unixmen.com/linux-desktop-backup-made-easy-sbackup/" style="color:#0067B7;" >SBackup: A Simple Backup Solution For Your Linux Desktop</a></h2>	<!-- /roster_slideri -->
+			</div></div><!-- /roster_slide -->
+		</div> <div id="roster_slider_1_next" class="roster_next" style="background: transparent url(http://180016988.r.cdn77.net/wp-content/plugins/roster-slider/css/skins/default/buttons/default/next.png) no-repeat 0 0;top:45%;"></div><div id="roster_slider_1_prev" class="roster_prev" style="background: transparent url(http://180016988.r.cdn77.net/wp-content/plugins/roster-slider/css/skins/default/buttons/default/prev.png) no-repeat 0 0;top:45%;"></div>
+	</div></div>  
+  
+  
+  <div class="body">
+	<div class="lftPnl">
+		
+				<div id="post-19437" class="post-19437 post type-post status-publish format-standard hentry category-centos category-fedora category-linux-tutorials category-opensource category-software tag-ampache tag-streaming-media-server">
+					<div class="leftDiv">
+                    <div style="margin-bottom:15px"><a href="https://plus.google.com/110820376491877300065/posts"><img src="http://180016988.r.cdn77.net/wp-content/uploads/google-plus.gif" alt="Google Plus" /></a></div>
+				<div style="left:20px; float:left; width:60px; height:60px"><a href="http://www.unixmen.com/author/sk/"><img alt='' src='http://0.gravatar.com/avatar/499ccc1154e9b8569b87413434220b91?s=60&amp;d=&amp;r=G' class='avatar avatar-60 photo' height='60' width='60' /></a></div>
+				<div style="margin-left:70px"><h1 class="title">Install Ampache Streaming Media Server On CentOS 6.4</h1>
+					<p class="meta">
+						Written by <a href="http://www.unixmen.com/author/sk/" title="SK">SK</a> on <time datetime="2013-09-16" pubdate>September 16, 2013</time>. Posted in <a href="http://www.unixmen.com/category/linux-distributions/centos/" title="View all posts in CentOS" rel="category tag">CentOS</a>, <a href="http://www.unixmen.com/category/linux-distributions/fedora/" title="View all posts in Fedora" rel="category tag">Fedora</a>, <a href="http://www.unixmen.com/category/linux-tutorials/" title="View all posts in Linux tutorials" rel="category tag">Linux tutorials</a>, <a href="http://www.unixmen.com/category/opensource/" title="View all posts in opensource" rel="category tag">opensource</a>, <a href="http://www.unixmen.com/category/news/software/" title="View all posts in Software" rel="category tag">Software</a>					</p>				
+				</div>
+				<ul id="sharebarx">
+<li><!-- Place this tag where you want the +1 button to render. -->
+<div class="g-plusone"></div>
+
+<!-- Place this tag after the last +1 button tag. -->
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script></li><li><a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="unixmen">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script></li><li><iframe src="http://www.facebook.com/plugins/like.php?href=http://www.unixmen.com/setup-streaming-media-server-ampache/&layout=button_count&show_faces=false&width=85&action=like&colorscheme=light&height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:85px; height:21px;" allowTransparency="true"></iframe></li><li><script type="text/javascript" src="http://reddit.com/static/button/button1.js"></script></li><li><script src="http://www.stumbleupon.com/hostedbadge.php?s=2"></script></li><li><span class="st_facebook_hcount" displayText="Share"></span><span class="st_email" displayText="Email"></span><span class="st_sharethis" displayText="Share"></span></li></ul>				
+      <div class="opnOpffice">
+		    <script type="text/javascript">
+    // <![CDATA[
+        var disqus_shortname = 'unixmensite';
+        (function () {
+            var nodes = document.getElementsByTagName('span');
+            for (var i = 0, url; i < nodes.length; i++) {
+                if (nodes[i].className.indexOf('dsq-postid') != -1) {
+                    nodes[i].parentNode.setAttribute('data-disqus-identifier', nodes[i].getAttribute('rel'));
+                    url = nodes[i].parentNode.href.split('#', 1);
+                    if (url.length == 1) { url = url[0]; }
+                    else { url = url[1]; }
+                    nodes[i].parentNode.href = url + '#disqus_thread';
+                }
+            }
+            var s = document.createElement('script'); s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + 'disqus.com/forums/' + disqus_shortname + '/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+    //]]>
+    </script>
+<ul id="sharebar" style="background:#;border-color:#;">
+<li></li><li><a href="http://twitter.com/share" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://twitter.com']);" class="twitter-share-button" data-count="vertical" data-via="unixmen">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script></li><li><iframe src="http://www.facebook.com/plugins/like.php?href=http://www.unixmen.com/setup-streaming-media-server-ampache/&layout=box_count&show_faces=false&width=60&action=like&colorscheme=light&height=45" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:45px; height:60px;" allowTransparency="true"></iframe></li><li><script type="text/javascript" src="http://reddit.com/static/button/button2.js"></script></li><li><script src="http://www.stumbleupon.com/hostedbadge.php?s=5"></script></li><li><script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script><span class="st_facebook_vcount" displayText="Share"></span><span class="st_email" displayText="Email"></span><span class="st_sharethis" displayText="Share"></span></li></ul><ul id="sharebarx">
+<li><!-- Place this tag where you want the +1 button to render. -->
+<div class="g-plusone"></div>
+
+<!-- Place this tag after the last +1 button tag. -->
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script></li><li><a href="http://twitter.com/share" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://twitter.com']);" class="twitter-share-button" data-count="horizontal" data-via="unixmen">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script></li><li><iframe src="http://www.facebook.com/plugins/like.php?href=http://www.unixmen.com/setup-streaming-media-server-ampache/&layout=button_count&show_faces=false&width=85&action=like&colorscheme=light&height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:85px; height:21px;" allowTransparency="true"></iframe></li><li><script type="text/javascript" src="http://reddit.com/static/button/button1.js"></script></li><li><script src="http://www.stumbleupon.com/hostedbadge.php?s=2"></script></li><li><span class="st_facebook_hcount" displayText="Share"></span><span class="st_email" displayText="Email"></span><span class="st_sharethis" displayText="Share"></span></li></ul><p><a href="https://github.com/ampache/ampache/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);" target="_blank"><strong>Ampache</strong></a> is a a web based audio/video streaming software and file manager. It allows you to access your music &amp; videos from anywhere, using almost any internet enabled device. It isn&#8217;t a media organizer, it just use the existing organized media files in a useful way. So you must be aware of managing and organizing the media files.</p>
+<p><strong>Scenario</strong></p>
+<p>This how-to was tested on CentOS 6.4, although it should work on almost all RHEL based systems. In this how-to, my test box hostname and IP address are <strong>server.unixmen.com</strong> and <strong>192.168.1.201/24</strong>. Change these values with your own where it appropriate.</p>
+<p><strong>Prerequisites </strong></p>
+<div id="stcpDiv">
+<p>Your server should have installed and configured with Apache, MySQL and PHP(LAMP). Refer any one of the following links to setup LAMP server.</p>
+<p style="padding-left: 30px">- <a href="http://www.unixmen.com/install-lamp-apache-with-mariadb-and-php-on-centosrhelscientific-linux-6/"  target="_blank">Install LAMP (Apache, MariaDB, PHP) Server On CentOS 6.4</a>.</p>
+<div id="stcpDiv">
+<p style="padding-left: 240px">or</p>
+<p style="padding-left: 30px">- <a href="http://www.unixmen.com/install-lamp-server-in-centos-6-4-rhel-6-4/"  target="_blank">Install LAMP (Apache, MySQL, PHP) Server On CentOS 6.4</a>.</p>
+<p>And install the following PHP modules too.</p>
+<pre># yum install php-mcrypt php-pdo php-cli php-mysql php-gd php-xml libtool-ltdl mhash mcrypt -y</pre>
+<p><strong>Create Database and User for Ampache<br />
+</strong></p>
+<p>For instance, here i am going to create a database called <strong>“ampachedb”</strong> and database user called <strong>“ampache”</strong> with password <strong>“centos”</strong>. You can define database and user as per your liking.</p>
+<pre># mysql -u root -p
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 3
+Server version: 5.5.31-MariaDB MariaDB Server
+
+Copyright (c) 2000, 2013, Oracle, Monty Program Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]&gt; <span style="color: #ff0000">create database ampachedb;</span>
+Query OK, 1 row affected (0.02 sec)
+
+MariaDB [(none)]&gt; <span style="color: #ff0000">GRANT ALL ON ampachedb.* TO ampacheuser@localhost IDENTIFIED BY 'centos';</span>
+Query OK, 0 rows affected (0.01 sec)
+
+MariaDB [(none)]&gt; <span style="color: #ff0000">flush privileges;</span>
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [(none)]&gt; exit
+Bye</pre>
+<p><strong>Adjust Firewall/Router Settings</strong></p>
+<p>Allow the apache default port <strong>“80″</strong> through iptables/router. Edit file <strong>/etc/sysconfig/iptables</strong>,</p>
+<pre id="stcpDiv"># vi /etc/sysconfig/iptables</pre>
+<p>Add the following line.</p>
+<pre>-A INPUT -p tcp -m state --state NEW --dport 80 -j ACCEPT</pre>
+<p>Now restart the iptables service.</p>
+<pre># /etc/init.d/iptables restart</pre>
+<p><strong>Getting Ampache<br />
+</strong></p>
+<p>Download the latest version of <a href="https://github.com/ampache/ampache/tags" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://github.com']);" target="_blank">Ampache here</a> or enter the following command to download it from your terminal.</p>
+<pre># wget https://github.com/ampache/ampache/archive/3.6-alpha6.zip</pre>
+<div id="stcpDiv">
+<p><span style="color: #ff0000"><strong>Note:</strong></span> Here you can host your streaming media server site in two methods.</p>
+<p>1. Directly from the web root folder, so that you can access your website by navigating to <strong>http://domain-name/</strong>.</p>
+<p>2. Alternatively create a sub directory in web root folder and host website from the sub-directory i.e you can access your website using URL <strong>http://domain-name/sub-directory-name</strong>.</p>
+<p>Here, for testing purpose,  i am going to host my streaming site under a sub directory.</p>
+<p>Extract the downloaded file using command:</p>
+<pre># tar -zxvf 3.6-alpha6</pre>
+<p>Move the contents to apache web root.</p>
+<pre># mv ampache-3.6-alpha6/ /var/www/html/ampache</pre>
+<p>Set the write permissions to ampache/config directory.</p>
+<pre># chmod -R 777 /var/www/html/ampache/config/</pre>
+<p><strong>Begin Installation</strong></p>
+<p>Open up browser and type <strong>http://domain-name/ampache</strong> or <strong>http://ip-address/ampache</strong> in the address bar.</p>
+<p>The following should appear. Click <strong>Start configuration</strong>.</p>
+<p><a href="http://180016988.r.cdn77.net/wp-content/uploads/2013/09/Ampache-Pour-lAmour-de-la-Musique-Install-Mozilla-Firefox_001.png" ><img class="aligncenter  wp-image-19441" alt="Ampache :: Pour l'Amour de la Musique - Install - Mozilla Firefox_001" src="http://180016988.r.cdn77.net/wp-content/uploads/2013/09/Ampache-Pour-lAmour-de-la-Musique-Install-Mozilla-Firefox_001-1024x620.png" width="576" height="348" /></a>Enter the MySQL database, user and password details. Make sure that you checked the checkbox <strong>&#8220;Overwrite existing database&#8221; </strong>since we already created the database.</p>
+<p><a href="http://180016988.r.cdn77.net/wp-content/uploads/2013/09/Ampache-Pour-lAmour-de-la-Musique-Install-Mozilla-Firefox_004.png" ><img class="aligncenter  wp-image-19445" alt="Ampache :: Pour l'Amour de la Musique - Install - Mozilla Firefox_004" src="http://180016988.r.cdn77.net/wp-content/uploads/2013/09/Ampache-Pour-lAmour-de-la-Musique-Install-Mozilla-Firefox_004-1024x620.png" width="576" height="348" /></a>Enter the newly created MySQL database, user and password details. Click <strong>write</strong> to generate <strong>ampache.config.php</strong> file and click <strong>Continue to step 3</strong> button.</p>
+<p><a href="http://180016988.r.cdn77.net/wp-content/uploads/2013/09/Ampache-Pour-lAmour-de-la-Musique-Install-Mozilla-Firefox_006.png" ><img class="aligncenter  wp-image-19446" alt="Ampache :: Pour l'Amour de la Musique - Install - Mozilla Firefox_006" src="http://180016988.r.cdn77.net/wp-content/uploads/2013/09/Ampache-Pour-lAmour-de-la-Musique-Install-Mozilla-Firefox_006-1024x620.png" width="576" height="348" /></a>Now you will be asked to setup the <strong>admin</strong> user password. Enter the password and click <strong>Create Account</strong>.</p>
+<p><a href="http://180016988.r.cdn77.net/wp-content/uploads/2013/09/Ampache-Pour-lAmour-de-la-Musique-Install-Mozilla-Firefox_008.png" ><img class="aligncenter  wp-image-19447" alt="Ampache :: Pour l'Amour de la Musique - Install - Mozilla Firefox_008" src="http://180016988.r.cdn77.net/wp-content/uploads/2013/09/Ampache-Pour-lAmour-de-la-Musique-Install-Mozilla-Firefox_008-1024x620.png" width="576" height="348" /></a>Finally Ampache will ask you to update to the most recent version. Click on Update.</p>
+<p><a href="http://180016988.r.cdn77.net/wp-content/uploads/2013/09/Ampache-Update-Mozilla-Firefox_010.png" ><img class="aligncenter  wp-image-19448" alt="Ampache Update - Mozilla Firefox_010" src="http://180016988.r.cdn77.net/wp-content/uploads/2013/09/Ampache-Update-Mozilla-Firefox_010-1024x620.png" width="576" height="348" /></a>That&#8217;s it. Ampache has been installed now. I recommend you to read the <strong></strong><a href="http://ampache.org/wiki/start" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://ampache.org']);" target="_blank">Official Ampache Wiki</a> page for further configurations.</p>
+</div>
+</div>
+</div>
+
+<!-- Quick Adsense WordPress Plugin: http://quicksense.net/ -->
+<div style="float:none;margin:10px 0 10px 0;text-align:center;">
+<div class="box-info" style="text-align: justify;">For questions please refer to our Q/A forum at : <a href="http://ask.unixmen.com" >http://ask.unixmen.com/ </a></div>
+<!-- BuySellAds Zone Code -->
+<div id="bsap_1289091" class="bsarocks bsap_98a5476e4186edb0166977da67937f0c"></div>
+<!-- End BuySellAds Zone Code -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 336X280-Content Top right ad -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-2917661377128354"
+     data-ad-slot="7884474091"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+<div style="font-size:0px;height:0px;line-height:0px;margin:0;padding:0;clear:both"></div><div class='yarpp-related'>
+<p>Related posts:</p><ol>
+<li><a href='http://www.unixmen.com/install-processwire-cms-on-centos-6-4/' rel='bookmark' title='Install ProcessWire CMS Using LAMP Server On CentOS 6.4'>Install ProcessWire CMS Using LAMP Server On CentOS 6.4</a></li>
+<li><a href='http://www.unixmen.com/install-wordpress-using-lamp-server-on-centos-rhel-scientific-linux/' rel='bookmark' title='Install WordPress 3.5.1 Using LAMP Server on CentOS 6.4 / RHEL 6.4 / Scientific Linux 6.4'>Install WordPress 3.5.1 Using LAMP Server on CentOS 6.4 / RHEL 6.4 / Scientific Linux 6.4</a></li>
+<li><a href='http://www.unixmen.com/install-lemp-nginx-with-mariadb-and-php-on-centos-6/' rel='bookmark' title='Install LEMP Server (Nginx with MariaDB and PHP) on CentOS 6'>Install LEMP Server (Nginx with MariaDB and PHP) on CentOS 6</a></li>
+<li><a href='http://www.unixmen.com/install-lamp-apache-with-mariadb-and-php-on-centosrhelscientific-linux-6/' rel='bookmark' title='Install LAMP (Apache with MariaDB and PHP) on CentOS/RHEL/Scientific Linux 6'>Install LAMP (Apache with MariaDB and PHP) on CentOS/RHEL/Scientific Linux 6</a></li>
+<li><a href='http://www.unixmen.com/install-feng-office-collaboration-suite-on-centos-6-4/' rel='bookmark' title='Install Feng Office Collaboration Suite On CentOS 6.4'>Install Feng Office Collaboration Suite On CentOS 6.4</a></li>
+</ol>
+<img src="http://yarpp.org/pixels/9a49b9534a4a64c5fda2537c7da5b283" alt="Yarpp"/>
+</div>
+
+      </div>
+      <div style="text-align:center"></div>
+      <div style="text-align:center"></div>
+      <div class="tag-links"><ul><a href="http://www.unixmen.com/tag/ampache/" rel="tag">Ampache</a><a href="http://www.unixmen.com/tag/streaming-media-server/" rel="tag">Streaming Media Server</a></ul></div>
+		<p class="links">
+		<a href="http://www.unixmen.com/setup-streaming-media-server-ampache/#respond" title="Comment on Install Ampache Streaming Media Server On CentOS 6.4">0 Comment(s)</a>		</p>
+		</div>
+				</div><!-- #post-## -->
+			<section class="author-box clearfix">
+		
+				<img alt='' src='http://0.gravatar.com/avatar/499ccc1154e9b8569b87413434220b91?s=96&amp;d=&amp;r=G' class='avatar avatar-96 photo' height='96' width='96' />				
+				<h3 class="name">SK</h3>
+				
+				<div class="description">Senthilkumar aka SK, a Linux enthusiast, FOSS Supporter &amp; Technical Writer from Tamilnadu, India. A passionate and dynamic person, aims to deliver quality content to IT professionals and loves very much to write and explore new things about Linux, Open Source, Computers and Internet. Find more about him on: http://about.me/psenthilkumar. Contact: sk@unixmen.com, ask2sk@in.com</div>
+
+			</section>
+							
+<div id="disqus_thread">
+    </div>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+    var disqus_url = 'http://www.unixmen.com/setup-streaming-media-server-ampache/';
+    var disqus_identifier = '19437 http://www.unixmen.com/?p=19437';
+    var disqus_container_id = 'disqus_thread';
+    var disqus_domain = 'disqus.com';
+    var disqus_shortname = 'unixmensite';
+    var disqus_title = "Install Ampache Streaming Media Server On CentOS 6.4";
+        var disqus_config = function () {
+        var config = this; // Access to the config object
+        config.language = '';
+
+        /*
+           All currently supported events:
+            * preData — fires just before we request for initial data
+            * preInit - fires after we get initial data but before we load any dependencies
+            * onInit  - fires when all dependencies are resolved but before dtpl template is rendered
+            * afterRender - fires when template is rendered but before we show it
+            * onReady - everything is done
+         */
+
+        config.callbacks.preData.push(function() {
+            // clear out the container (its filled for SEO/legacy purposes)
+            document.getElementById(disqus_container_id).innerHTML = '';
+        });
+                config.callbacks.onReady.push(function() {
+            // sync comments in the background so we don't block the page
+            var script = document.createElement('script');
+            script.async = true;
+            script.src = '?cf_action=sync_comments&post_id=19437';
+
+            var firstScript = document.getElementsByTagName( "script" )[0];
+            firstScript.parentNode.insertBefore(script, firstScript);
+        });
+                    };
+/* ]]> */
+</script>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+    var DsqLocal = {
+        'trackbacks': [
+        ],
+        'trackback_url': "http:\/\/www.unixmen.com\/setup-streaming-media-server-ampache\/trackback\/"    };
+/* ]]> */
+</script>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.74';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+/* ]]> */
+</script>
+
+
+		
+
+
+</div>
+
+<div class="rightPnl">
+<div class="module">
+<h3 class="module-title">Like us on Facebook</h3>
+<div class="execphpwidget">
+				<div class="execphpwidget"><div class="fb-like-box" data-href="http://www.facebook.com/pages/Unixmen/272714361685" data-width="292" data-show-faces="false" data-stream="false" data-header="false"></div></div>
+					<div class="execphpwidget"><!-- BuySellAds Zone Code -->
+<div id="bsap_1263938" class="bsarocks bsap_98a5476e4186edb0166977da67937f0c"></div>
+<!-- End BuySellAds Zone Code --></div>
+					<div class="execphpwidget"><script type="text/javascript"><!--
+google_ad_client = "ca-pub-2917661377128354";
+/* 300X250 directory */
+google_ad_slot = "2262590223";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+		</div>
+</div>
+    
+<div class="module">
+<h3 class="module-title">This week Top Posts <img src="http://180016988.r.cdn77.net/wp-content/themes/unimax/images/hot.jpg" alt="" /></h3>
+<div class="post1">
+	<!-- Wordpress Popular Posts Plugin v2.3.7 [W] [daily] [views] [regular] -->
+
+<ul class="wpp-list">
+<li><a href="http://www.unixmen.com/top-things-installing-ubuntu-13-10/" title="Top Things To Do After Installing Ubuntu 13.10 &#039;Saucy Salamander&#039;" target="_self"><img src="http://180016988.r.cdn77.net/wp-content/uploads/2012/04/ubuntu-logo-50x50.png" alt="" border="0" width="50" height="50" class="wpp-thumbnail wpp_cached_thumb wpp_featured" /></a><a href="http://www.unixmen.com/top-things-installing-ubuntu-13-10/" title="Top Things To Do After Installing Ubuntu 13.10 &#039;Saucy Salamander&#039;" class="wpp-post-title" target="_self">Top Things To Do After Installing Ubuntu 13.10 &#039;Saucy Salamander&#039;</a> : <span class="wpp-excerpt">Ubuntu 13.10 Saucy Salamander will be released on coming October 17th with many new salient featur...</span><span class="post-stats"><span class="wpp-comments">0 comments</span> | <span class="wpp-author">by <a href="http://www.unixmen.com/author/sk/">SK</a></span></span></li>
+<li><a href="http://www.unixmen.com/syncdrive-google-drive-client-ubuntu-derivatives/" title="SyncDrive: Google Drive Client For Ubuntu And It&#039;s Derivatives" target="_self"><img src="http://180016988.r.cdn77.net/wp-content/uploads/2013/11/photo.jpg-50x50.png" alt="" border="0" width="50" height="50" class="wpp-thumbnail wpp_cached_thumb wpp_featured" /></a><a href="http://www.unixmen.com/syncdrive-google-drive-client-ubuntu-derivatives/" title="SyncDrive: Google Drive Client For Ubuntu And It&#039;s Derivatives" class="wpp-post-title" target="_self">SyncDrive: Google Drive Client For Ubuntu And It&#039;s Derivatives</a> : <span class="wpp-excerpt">SyncDrive is a Google Drive client application for Ubuntu and its derivatives developed by David Tav...</span><span class="post-stats"><span class="wpp-comments">0 comments</span> | <span class="wpp-author">by <a href="http://www.unixmen.com/author/sk/">SK</a></span></span></li>
+<li><a href="http://www.unixmen.com/dnf-experimental-replacement-yum/" title="DNF: An Experimental Replacement For YUM" target="_self"><img src="http://180016988.r.cdn77.net/wp-content/uploads/2013/11/Fedora_logo-50x50.png" alt="" border="0" width="50" height="50" class="wpp-thumbnail wpp_cached_thumb wpp_featured" /></a><a href="http://www.unixmen.com/dnf-experimental-replacement-yum/" title="DNF: An Experimental Replacement For YUM" class="wpp-post-title" target="_self">DNF: An Experimental Replacement For YUM</a> : <span class="wpp-excerpt">What is DNF?
+DNF is a package manager which is an experimental replacement for YUM. It is based on ...</span><span class="post-stats"><span class="wpp-comments">0 comments</span> | <span class="wpp-author">by <a href="http://www.unixmen.com/author/sk/">SK</a></span></span></li>
+<li><a href="http://www.unixmen.com/install-slackware-14-1-step-step/" title="How To Install Slackware 14.1 Step By Step" target="_self"><img src="http://180016988.r.cdn77.net/wp-content/uploads/2013/11/Slackware-50x50.png" alt="" border="0" width="50" height="50" class="wpp-thumbnail wpp_cached_thumb wpp_featured" /></a><a href="http://www.unixmen.com/install-slackware-14-1-step-step/" title="How To Install Slackware 14.1 Step By Step" class="wpp-post-title" target="_self">How To Install Slackware 14.1 Step By Step</a> : <span class="wpp-excerpt">Some people were asking us to make small tutorial about how to install Slackware.
+The only differenc...</span><span class="post-stats"><span class="wpp-comments">0 comments</span> | <span class="wpp-author">by <a href="http://www.unixmen.com/author/pirat9/">Mel Kham</a></span></span></li>
+<li><a href="http://www.unixmen.com/upgrade-ubuntu-13-04-raring-ubuntu-13-10-saucy-salamander/" title="How To Upgrade From Ubuntu 13.04 Raring To Ubuntu 13.10 Saucy Salamander" target="_self"><img src="http://180016988.r.cdn77.net/wp-content/uploads/2012/04/ubuntu-logo-50x50.png" alt="" border="0" width="50" height="50" class="wpp-thumbnail wpp_cached_thumb wpp_featured" /></a><a href="http://www.unixmen.com/upgrade-ubuntu-13-04-raring-ubuntu-13-10-saucy-salamander/" title="How To Upgrade From Ubuntu 13.04 Raring To Ubuntu 13.10 Saucy Salamander" class="wpp-post-title" target="_self">How To Upgrade From Ubuntu 13.04 Raring To Ubuntu 13.10 Saucy Salamander</a> : <span class="wpp-excerpt">Ubuntu 13.10 Saucy will be released on October 17th. Hope it will come with lot of improvements and ...</span><span class="post-stats"><span class="wpp-comments">0 comments</span> | <span class="wpp-author">by <a href="http://www.unixmen.com/author/sk/">SK</a></span></span></li>
+<li><a href="http://www.unixmen.com/thunderbird-26-beta-1-released/" title="Thunderbird 26 Beta 1 Released!" target="_self"><img src="http://180016988.r.cdn77.net/wp-content/uploads/2013/11/Thunderbird-logo-50x50.png" alt="" border="0" width="50" height="50" class="wpp-thumbnail wpp_cached_thumb wpp_featured" /></a><a href="http://www.unixmen.com/thunderbird-26-beta-1-released/" title="Thunderbird 26 Beta 1 Released!" class="wpp-post-title" target="_self">Thunderbird 26 Beta 1 Released!</a> : <span class="wpp-excerpt">Thunderbird is an open source local email application which is used to manage email and news feeds. ...</span><span class="post-stats"><span class="wpp-comments">0 comments</span> | <span class="wpp-author">by <a href="http://www.unixmen.com/author/oltjano/">oltjano terpollari</a></span></span></li>
+
+</ul>
+
+<!-- End Wordpress Popular Posts Plugin v2.3.7 -->
+<img src="http://180016988.r.cdn77.net/wp-content/themes/unimax/images/bigLine.jpg" alt="" />
+</div>
+    </div>
+    <div style="float:left;">
+    			<div class="textwidget"><a href="http://www.unixmen.com/contact-us/" ><img src="http://180016988.r.cdn77.net/wp-content/uploads/2012/06/write-for-us.png" width="260" height="70" alt="Write for us" align="middle"/></a></div>
+		
+<!-- Quick Adsense Wordpress Plugin: http://quicksense.net/ -->
+
+<!-- BuySellAds Zone Code -->
+<div id="bsap_1290953" class="bsarocks bsap_98a5476e4186edb0166977da67937f0c"></div>
+<!-- End BuySellAds Zone Code -->
+
+        <!-- BuySellAds.com Zone Code -->
+        <div id="bsap_1263938" class="bsarocks bsap_98a5476e4186edb0166977da67937f0c"></div>
+        <!-- END BuySellAds.com Zone Code -->
+          </div>
+    <div class="module2">
+    <h3 class="module-title2">Recent Posts</h3>
+
+    <div class="recentPost">
+						Recent Posts		<ul>
+					<li>
+				<a href="http://www.unixmen.com/thunderbird-26-beta-1-released/" title="Thunderbird 26 Beta 1 Released!">Thunderbird 26 Beta 1 Released!</a>
+						</li>
+					<li>
+				<a href="http://www.unixmen.com/syncdrive-google-drive-client-ubuntu-derivatives/" title="SyncDrive: Google Drive Client For Ubuntu And It&#8217;s Derivatives">SyncDrive: Google Drive Client For Ubuntu And It&#8217;s Derivatives</a>
+						</li>
+					<li>
+				<a href="http://www.unixmen.com/install-java-slackware-14-1/" title="Install Java On Slackware 14.1">Install Java On Slackware 14.1</a>
+						</li>
+					<li>
+				<a href="http://www.unixmen.com/install-slackware-14-1-step-step/" title="How To Install Slackware 14.1 Step By Step">How To Install Slackware 14.1 Step By Step</a>
+						</li>
+					<li>
+				<a href="http://www.unixmen.com/five-examples-ping-utility/" title="Five Examples Of The ping Utility">Five Examples Of The ping Utility</a>
+						</li>
+					<li>
+				<a href="http://www.unixmen.com/dnf-experimental-replacement-yum/" title="DNF: An Experimental Replacement For YUM">DNF: An Experimental Replacement For YUM</a>
+						</li>
+					<li>
+				<a href="http://www.unixmen.com/fedora-20-heisenbug-beta/" title="Fedora 20 &#8220;Heisenbug&#8221; Beta Is Out!">Fedora 20 &#8220;Heisenbug&#8221; Beta Is Out!</a>
+						</li>
+					<li>
+				<a href="http://www.unixmen.com/install-picapy-picasa-web-app-ubuntu-derivates/" title="Install Picapy, Picasa Web App in Ubuntu And It&#8217;s Derivates">Install Picapy, Picasa Web App in Ubuntu And It&#8217;s Derivates</a>
+						</li>
+					<li>
+				<a href="http://www.unixmen.com/firefox-25-released/" title="Firefox 25 Has Been Released!">Firefox 25 Has Been Released!</a>
+						</li>
+					<li>
+				<a href="http://www.unixmen.com/install-opera-12-16-ubuntu-13-10/" title="Install Opera 12.16 in Ubuntu 13.10">Install Opera 12.16 in Ubuntu 13.10</a>
+						</li>
+				</ul>
+		        </div>
+    <img src="http://180016988.r.cdn77.net/wp-content/themes/unimax/images/bigLine.jpg" alt="" style="clear:both" />
+    
+    
+    </div>
+    <div style="float:left;">
+    			<div class="textwidget"><script type="text/javascript"><!--
+google_ad_client = "ca-pub-2917661377128354";
+/* 160X600 Sidebar UX */
+google_ad_slot = "9908287444";
+google_ad_width = 160;
+google_ad_height = 600;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+		    </div>
+    <div class="module2">
+    <h3 class="module-title2">Recent Comments</h3>
+        <section class="comments-list">
+
+		<article>
+		
+		        <div style="float:left; display:block; margin:0 10px 10px 0; border:1px solid #CCCCCC; padding:3px; width:35px; height:35px;"><img alt='' src='http://1.gravatar.com/avatar/3c487391335d7240ce775d81febdb4ae?s=35&amp;d=&amp;r=G' class='avatar avatar-35 photo' height='35' width='35' /></div>
+        <div style="float:left;">
+		<h4 class="author">Kemal Eşli</h4>
+
+		<p class="meta">
+			<time datetime="2013-11-15" pubdate>November 15, 2013</time>
+			| <a class="permalink" href="http://www.unixmen.com/zpanel-the-best-alternative-for-cpanel/#comment-14445">#</a>
+		</p>
+		</div>
+		<div class="content" style="float:left;"><p>good</p>
+</div>
+	
+	</article>
+		<article>
+		
+		        <div style="float:left; display:block; margin:0 10px 10px 0; border:1px solid #CCCCCC; padding:3px; width:35px; height:35px;"><img alt='' src='http://0.gravatar.com/avatar/2a34d4268e73867c1504a1217aa8cf1e?s=35&amp;d=&amp;r=G' class='avatar avatar-35 photo' height='35' width='35' /></div>
+        <div style="float:left;">
+		<h4 class="author">Stockman</h4>
+
+		<p class="meta">
+			<time datetime="2013-11-15" pubdate>November 15, 2013</time>
+			| <a class="permalink" href="http://www.unixmen.com/blender-2-69-has-been-released-ppa-ubuntu/#comment-14444">#</a>
+		</p>
+		</div>
+		<div class="content" style="float:left;"><p>where is the tutorial ?</p>
+</div>
+	
+	</article>
+		<article>
+		
+		        <div style="float:left; display:block; margin:0 10px 10px 0; border:1px solid #CCCCCC; padding:3px; width:35px; height:35px;"><img alt='' src='http://1.gravatar.com/avatar/1a13c6603beab380f95df71b2356c7da?s=35&amp;d=&amp;r=G' class='avatar avatar-35 photo' height='35' width='35' /></div>
+        <div style="float:left;">
+		<h4 class="author">Dhruv Vyas</h4>
+
+		<p class="meta">
+			<time datetime="2013-11-15" pubdate>November 15, 2013</time>
+			| <a class="permalink" href="http://www.unixmen.com/install-lamp-server-apache-mysql-php-ubuntu-13-10-server/#comment-14443">#</a>
+		</p>
+		</div>
+		<div class="content" style="float:left;"><p>Woow. Nice guide. Worked like a charm. Took me less than two mins to configure it. Thanx for a wonderful post.</p>
+</div>
+	
+	</article>
+		<article>
+		
+		        <div style="float:left; display:block; margin:0 10px 10px 0; border:1px solid #CCCCCC; padding:3px; width:35px; height:35px;"><img alt='' src='http://1.gravatar.com/avatar/ba57fddfc44dcff8244cb70f5277e1e8?s=35&amp;d=&amp;r=G' class='avatar avatar-35 photo' height='35' width='35' /></div>
+        <div style="float:left;">
+		<h4 class="author">MEl Kham</h4>
+
+		<p class="meta">
+			<time datetime="2013-11-15" pubdate>November 15, 2013</time>
+			| <a class="permalink" href="http://www.unixmen.com/howto-configure-ubuntu-13-10-behind-proxy-authentication-required/#comment-14442">#</a>
+		</p>
+		</div>
+		<div class="content" style="float:left;"><p>Is  fixed   now   Domainuser</p>
+</div>
+	
+	</article>
+		<article>
+		
+		        <div style="float:left; display:block; margin:0 10px 10px 0; border:1px solid #CCCCCC; padding:3px; width:35px; height:35px;"><img alt='' src='http://1.gravatar.com/avatar/f246cd642db544e345e4a2b13db7d926?s=35&amp;d=&amp;r=G' class='avatar avatar-35 photo' height='35' width='35' /></div>
+        <div style="float:left;">
+		<h4 class="author">santhosh</h4>
+
+		<p class="meta">
+			<time datetime="2013-11-15" pubdate>November 15, 2013</time>
+			| <a class="permalink" href="http://www.unixmen.com/install-cacti-network-monitoring-tool-on-centos-6-4-rhel-6-4-scientific-linux-6-4/#comment-14441">#</a>
+		</p>
+		</div>
+		<div class="content" style="float:left;"><p>hai sk ,iam install cacti on centos 64 bit ,when open cacti in browser iam getting blank page ,it is support for 64 bit or not please tell me</p>
+</div>
+	
+	</article>
+		
+</section>
+	
+	
+    </div>
+    <div style="float:left;">
+    &nbsp;<script type="text/javascript">
+window.___gcfg = {lang: 'en-US'}; 
+(function()  
+{var po = document.createElement("script"); 
+po.type = "text/javascript"; po.async = true;po.src = "https://apis.google.com/js/plusone.js"; 
+var s = document.getElementsByTagName("script")[0]; 
+s.parentNode.insertBefore(po, s); 
+})();</script> 
+<g:plus href="https://plus.google.com/110820376491877300065" size="badge"></g:plus>    </div>
+    <div style="float:left; margin-top:30px; margin-bottom:10px;"><img src="http://180016988.r.cdn77.net/wp-content/themes/unimax/images/bigLine.jpg" alt="" /></div>
+    <div style="float:left;">
+    			<div class="execphpwidget"></div>
+		    </div>
+    <div class="module2">
+
+
+    <div class="recentPost">
+    <h3 class="module-title2">Favorite Links</h3>
+	<ul class='xoxo blogroll'>
+<li><a href="http://www.iticy.com" title="Cheap Hosting   with 3 Datacenters  choice" target="" onclick="javascript:_gaq.push(['_trackEvent','outbound-blogroll','http://www.iticy.com']);">Cheap Hosting</a></li>
+<li><a href="http://www.tuxmachines.org/" title="Do you waddle the waddle? " target="" onclick="javascript:_gaq.push(['_trackEvent','outbound-blogroll','http://www.tuxmachines.org']);">TuxMachines.org</a></li>
+<li><a href="http://www.ubuntugeek.com/" title="Ubuntu Linux Tutorials,Howtos,Tips &amp; News" target="" onclick="javascript:_gaq.push(['_trackEvent','outbound-blogroll','http://www.ubuntugeek.com']);">UbuntuGeek.com</a></li>
+<li><a href="http://www.stelinuxhost.com/" rel="me" title="LinuxHost-Webdesing, seo &amp; Internet Marketing" target="" onclick="javascript:_gaq.push(['_trackEvent','outbound-blogroll','http://www.stelinuxhost.com']);">Webdesign &amp; SEO</a></li>
+
+	</ul>
+
+    <img src="http://180016988.r.cdn77.net/wp-content/themes/unimax/images/bigLine.jpg" alt="" />
+    </div>
+    
+    </div>
+    
+    <div align="center" style="min-height:610px;">
+    			<div class="execphpwidget"></div>
+					<div class="textwidget"><a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.en_US" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://creativecommons.org']);"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png" /></a><br />This work by <a xmlns:cc="http://creativecommons.org/ns#" href="unixmen.com" property="cc:attributionName" rel="cc:attributionURL">unixmen.com</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.en_US" >Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License</a>.</div>
+		    </div>
+    </div>
+		
+		<!-- #primary .widget-area -->
+
+	</div>
+<div class="footer">
+    <div class="lftSec">
+    
+    <h3 class="title">Archives</h3>		<select name="archive-dropdown" onchange='document.location.href=this.options[this.selectedIndex].value;'> <option value="">Select Month</option> 	<option value='http://www.unixmen.com/2013/11/'> November 2013 &nbsp;(38)</option>
+	<option value='http://www.unixmen.com/2013/10/'> October 2013 &nbsp;(86)</option>
+	<option value='http://www.unixmen.com/2013/09/'> September 2013 &nbsp;(69)</option>
+	<option value='http://www.unixmen.com/2013/08/'> August 2013 &nbsp;(118)</option>
+	<option value='http://www.unixmen.com/2013/07/'> July 2013 &nbsp;(88)</option>
+	<option value='http://www.unixmen.com/2013/06/'> June 2013 &nbsp;(87)</option>
+	<option value='http://www.unixmen.com/2013/05/'> May 2013 &nbsp;(44)</option>
+	<option value='http://www.unixmen.com/2013/04/'> April 2013 &nbsp;(41)</option>
+	<option value='http://www.unixmen.com/2013/03/'> March 2013 &nbsp;(42)</option>
+	<option value='http://www.unixmen.com/2013/02/'> February 2013 &nbsp;(7)</option>
+	<option value='http://www.unixmen.com/2013/01/'> January 2013 &nbsp;(7)</option>
+	<option value='http://www.unixmen.com/2012/12/'> December 2012 &nbsp;(13)</option>
+	<option value='http://www.unixmen.com/2012/11/'> November 2012 &nbsp;(17)</option>
+	<option value='http://www.unixmen.com/2012/10/'> October 2012 &nbsp;(36)</option>
+	<option value='http://www.unixmen.com/2012/09/'> September 2012 &nbsp;(28)</option>
+	<option value='http://www.unixmen.com/2012/08/'> August 2012 &nbsp;(26)</option>
+	<option value='http://www.unixmen.com/2012/07/'> July 2012 &nbsp;(46)</option>
+	<option value='http://www.unixmen.com/2012/06/'> June 2012 &nbsp;(53)</option>
+	<option value='http://www.unixmen.com/2012/05/'> May 2012 &nbsp;(60)</option>
+	<option value='http://www.unixmen.com/2012/04/'> April 2012 &nbsp;(51)</option>
+	<option value='http://www.unixmen.com/2012/03/'> March 2012 &nbsp;(50)</option>
+	<option value='http://www.unixmen.com/2012/02/'> February 2012 &nbsp;(60)</option>
+	<option value='http://www.unixmen.com/2012/01/'> January 2012 &nbsp;(33)</option>
+	<option value='http://www.unixmen.com/2011/12/'> December 2011 &nbsp;(32)</option>
+	<option value='http://www.unixmen.com/2011/11/'> November 2011 &nbsp;(31)</option>
+	<option value='http://www.unixmen.com/2011/10/'> October 2011 &nbsp;(30)</option>
+	<option value='http://www.unixmen.com/2011/09/'> September 2011 &nbsp;(56)</option>
+	<option value='http://www.unixmen.com/2011/08/'> August 2011 &nbsp;(45)</option>
+	<option value='http://www.unixmen.com/2011/07/'> July 2011 &nbsp;(41)</option>
+	<option value='http://www.unixmen.com/2011/06/'> June 2011 &nbsp;(49)</option>
+	<option value='http://www.unixmen.com/2011/05/'> May 2011 &nbsp;(76)</option>
+	<option value='http://www.unixmen.com/2011/04/'> April 2011 &nbsp;(65)</option>
+	<option value='http://www.unixmen.com/2011/03/'> March 2011 &nbsp;(62)</option>
+	<option value='http://www.unixmen.com/2011/02/'> February 2011 &nbsp;(48)</option>
+	<option value='http://www.unixmen.com/2011/01/'> January 2011 &nbsp;(57)</option>
+	<option value='http://www.unixmen.com/2010/12/'> December 2010 &nbsp;(75)</option>
+	<option value='http://www.unixmen.com/2010/11/'> November 2010 &nbsp;(54)</option>
+	<option value='http://www.unixmen.com/2010/10/'> October 2010 &nbsp;(61)</option>
+	<option value='http://www.unixmen.com/2010/09/'> September 2010 &nbsp;(69)</option>
+	<option value='http://www.unixmen.com/2010/08/'> August 2010 &nbsp;(57)</option>
+	<option value='http://www.unixmen.com/2010/07/'> July 2010 &nbsp;(16)</option>
+	<option value='http://www.unixmen.com/2010/06/'> June 2010 &nbsp;(37)</option>
+	<option value='http://www.unixmen.com/2010/05/'> May 2010 &nbsp;(40)</option>
+	<option value='http://www.unixmen.com/2010/04/'> April 2010 &nbsp;(45)</option>
+	<option value='http://www.unixmen.com/2010/03/'> March 2010 &nbsp;(69)</option>
+	<option value='http://www.unixmen.com/2010/02/'> February 2010 &nbsp;(97)</option>
+	<option value='http://www.unixmen.com/2010/01/'> January 2010 &nbsp;(19)</option>
+	<option value='http://www.unixmen.com/2009/12/'> December 2009 &nbsp;(74)</option>
+	<option value='http://www.unixmen.com/2009/11/'> November 2009 &nbsp;(68)</option>
+	<option value='http://www.unixmen.com/2009/10/'> October 2009 &nbsp;(76)</option>
+	<option value='http://www.unixmen.com/2009/09/'> September 2009 &nbsp;(55)</option>
+	<option value='http://www.unixmen.com/2009/08/'> August 2009 &nbsp;(25)</option>
+	<option value='http://www.unixmen.com/2009/07/'> July 2009 &nbsp;(19)</option>
+	<option value='http://www.unixmen.com/2009/06/'> June 2009 &nbsp;(55)</option>
+	<option value='http://www.unixmen.com/2009/05/'> May 2009 &nbsp;(42)</option>
+	<option value='http://www.unixmen.com/2009/04/'> April 2009 &nbsp;(26)</option>
+	<option value='http://www.unixmen.com/2009/03/'> March 2009 &nbsp;(33)</option>
+	<option value='http://www.unixmen.com/2009/02/'> February 2009 &nbsp;(20)</option>
+	<option value='http://www.unixmen.com/2009/01/'> January 2009 &nbsp;(28)</option>
+	<option value='http://www.unixmen.com/2008/12/'> December 2008 &nbsp;(19)</option>
+ </select>
+    </div>
+    
+    <div class="tags">
+    
+     <h2>Tags</h2><div class="tagcloud"><a href='http://www.unixmen.com/tag/android-2/' class='tag-link-117' title='54 topics' style='font-size: 11.0992366412pt;'>android</a>
+<a href='http://www.unixmen.com/tag/apache/' class='tag-link-131' title='32 topics' style='font-size: 8.74809160305pt;'>apache</a>
+<a href='http://www.unixmen.com/tag/browser/' class='tag-link-249' title='48 topics' style='font-size: 10.5648854962pt;'>browser</a>
+<a href='http://www.unixmen.com/tag/centos-2/' class='tag-link-287' title='62 topics' style='font-size: 11.7404580153pt;'>Centos</a>
+<a href='http://www.unixmen.com/tag/chrome/' class='tag-link-312' title='30 topics' style='font-size: 8.42748091603pt;'>chrome</a>
+<a href='http://www.unixmen.com/tag/command-line/' class='tag-link-351' title='27 topics' style='font-size: 8pt;'>command line</a>
+<a href='http://www.unixmen.com/tag/debian/' class='tag-link-418' title='80 topics' style='font-size: 12.9160305344pt;'>Debian</a>
+<a href='http://www.unixmen.com/tag/eyecandy/' class='tag-link-26' title='35 topics' style='font-size: 9.17557251908pt;'>eyecandy</a>
+<a href='http://www.unixmen.com/tag/fedora/' class='tag-link-27' title='124 topics' style='font-size: 14.9465648855pt;'>Fedora</a>
+<a href='http://www.unixmen.com/tag/firefox/' class='tag-link-609' title='41 topics' style='font-size: 9.81679389313pt;'>firefox</a>
+<a href='http://www.unixmen.com/tag/games/' class='tag-link-671' title='110 topics' style='font-size: 14.4122137405pt;'>games</a>
+<a href='http://www.unixmen.com/tag/gaming/' class='tag-link-672' title='93 topics' style='font-size: 13.5572519084pt;'>gaming</a>
+<a href='http://www.unixmen.com/tag/gnome/' class='tag-link-710' title='63 topics' style='font-size: 11.8473282443pt;'>gnome</a>
+<a href='http://www.unixmen.com/tag/google/' class='tag-link-733' title='45 topics' style='font-size: 10.2442748092pt;'>google</a>
+<a href='http://www.unixmen.com/tag/karmic-koala/' class='tag-link-946' title='46 topics' style='font-size: 10.3511450382pt;'>karmic koala</a>
+<a href='http://www.unixmen.com/tag/kde/' class='tag-link-949' title='30 topics' style='font-size: 8.42748091603pt;'>kde</a>
+<a href='http://www.unixmen.com/tag/libreoffice/' class='tag-link-1008' title='30 topics' style='font-size: 8.42748091603pt;'>libreoffice</a>
+<a href='http://www.unixmen.com/tag/linux/' class='tag-link-1021' title='520 topics' style='font-size: 21.572519084pt;'>Linux</a>
+<a href='http://www.unixmen.com/tag/linux-distribution/' class='tag-link-1032' title='59 topics' style='font-size: 11.5267175573pt;'>linux distribution</a>
+<a href='http://www.unixmen.com/tag/linuxmint/' class='tag-link-1071' title='99 topics' style='font-size: 13.8778625954pt;'>LinuxMint</a>
+<a href='http://www.unixmen.com/tag/lucid-lynx/' class='tag-link-1109' title='53 topics' style='font-size: 10.9923664122pt;'>lucid lynx</a>
+<a href='http://www.unixmen.com/tag/maverick-meerkat/' class='tag-link-1145' title='37 topics' style='font-size: 9.3893129771pt;'>maverick meerkat</a>
+<a href='http://www.unixmen.com/tag/mysql/' class='tag-link-1240' title='41 topics' style='font-size: 9.81679389313pt;'>mysql</a>
+<a href='http://www.unixmen.com/tag/news-2/' class='tag-link-1267' title='59 topics' style='font-size: 11.5267175573pt;'>news</a>
+<a href='http://www.unixmen.com/tag/oneiric-ocelot/' class='tag-link-1306' title='28 topics' style='font-size: 8.10687022901pt;'>oneiric ocelot</a>
+<a href='http://www.unixmen.com/tag/openoffice/' class='tag-link-1327' title='30 topics' style='font-size: 8.42748091603pt;'>openoffice</a>
+<a href='http://www.unixmen.com/tag/opensource/' class='tag-link-14' title='237 topics' style='font-size: 17.9389312977pt;'>opensource</a>
+<a href='http://www.unixmen.com/tag/opensuse/' class='tag-link-1345' title='36 topics' style='font-size: 9.28244274809pt;'>opensuse</a>
+<a href='http://www.unixmen.com/tag/oracle/' class='tag-link-1361' title='47 topics' style='font-size: 10.4580152672pt;'>oracle</a>
+<a href='http://www.unixmen.com/tag/ppa/' class='tag-link-1469' title='35 topics' style='font-size: 9.17557251908pt;'>ppa</a>
+<a href='http://www.unixmen.com/tag/precise-pangolin/' class='tag-link-1476' title='41 topics' style='font-size: 9.81679389313pt;'>Precise Pangolin</a>
+<a href='http://www.unixmen.com/tag/release/' class='tag-link-1553' title='28 topics' style='font-size: 8.10687022901pt;'>release</a>
+<a href='http://www.unixmen.com/tag/rhel/' class='tag-link-1576' title='34 topics' style='font-size: 8.96183206107pt;'>RHEL</a>
+<a href='http://www.unixmen.com/tag/security/' class='tag-link-1621' title='63 topics' style='font-size: 11.8473282443pt;'>security</a>
+<a href='http://www.unixmen.com/tag/server/' class='tag-link-1627' title='108 topics' style='font-size: 14.3053435115pt;'>server</a>
+<a href='http://www.unixmen.com/tag/software-2/' class='tag-link-1680' title='75 topics' style='font-size: 12.5954198473pt;'>software</a>
+<a href='http://www.unixmen.com/tag/themes-2/' class='tag-link-1791' title='45 topics' style='font-size: 10.2442748092pt;'>themes</a>
+<a href='http://www.unixmen.com/tag/tools/' class='tag-link-1812' title='50 topics' style='font-size: 10.7786259542pt;'>tools</a>
+<a href='http://www.unixmen.com/tag/ubuntu-2/' class='tag-link-1856' title='573 topics' style='font-size: 22pt;'>ubuntu</a>
+<a href='http://www.unixmen.com/tag/unix/' class='tag-link-1930' title='41 topics' style='font-size: 9.81679389313pt;'>unix</a>
+<a href='http://www.unixmen.com/tag/upgrade/' class='tag-link-1941' title='39 topics' style='font-size: 9.60305343511pt;'>upgrade</a>
+<a href='http://www.unixmen.com/tag/virtualbox/' class='tag-link-1979' title='42 topics' style='font-size: 9.92366412214pt;'>virtualbox</a>
+<a href='http://www.unixmen.com/tag/vlc/' class='tag-link-1986' title='30 topics' style='font-size: 8.42748091603pt;'>vlc</a>
+<a href='http://www.unixmen.com/tag/windows/' class='tag-link-2054' title='43 topics' style='font-size: 10.0305343511pt;'>windows</a>
+<a href='http://www.unixmen.com/tag/wine/' class='tag-link-2064' title='36 topics' style='font-size: 9.28244274809pt;'>wine</a></div>
+    </div>
+    
+    <div class="twitts">
+     <h2>YouTube</h2>
+<!-- Vixy YouTube Embed v3.1 -->
+<iframe frameborder="0" style="border: 0;" class="youtube-player" width="250" height="200" src="http://www.youtube.com/embed/zI6jqVImCOc?enablejsapi=1&amp;modestbranding=1&amp;fs=1&amp;rel=0&amp;playlist=TMjmCvB0D6A&amp;wmode=opaque" allowfullscreen="allowfullscreen" ></iframe>
+<br/><span style="" class="vye_links"><a href="http://vixy.net/download-youtube-videos.php?url=http://www.youtube.com/watch?v=zI6jqVImCOc">Download YouTube Video</a> | <a href="http://vixy.net">YouTube Converter</a>
+</span>
+<!-- End of YouTube Embed code -->
+    </div>
+  </div>
+  
+<div class="deepest">
+<div class="menu-top-menu-container"><ul id="menu-top-menu-1" class="menu"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-16454"><a href="http://www.unixmen.com/about-us/" >About Us</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7349"><a href="http://www.unixmen.com/advertising/" >Advertising</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7347"><a href="http://www.unixmen.com/sitemap/" >Sitemap</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7702"><a href="http://www.unixmen.com/privacy-policy/" >Privacy</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7703"><a href="http://www.unixmen.com/contact-us/" >Contact Us</a></li>
+</ul></div><a id="totop-scroller" href="#top"></a> </div>
+<div class="deepest2">
+<br>
+Copyright &copy; 2008-2013
+<a target="_blank" href="http://www.unixmen.com/" target="_blank">Unixmen.com</a>
+.
+</div>
+<div class="ftrAnbik">
+Maintained by
+<a title="web design company" href="http://www.unixmen.com/" target="_blank" >Unixmen</a>
+.
+</div>
+  <br  class="clear"/>
+
+</div>
+</div>
+<!-- start Vibrant Media IntelliTXT script section -->
+<script type="text/javascript" src="http://unixmen.us.intellitxt.com/intellitxt/front.asp?ipid=22747"></script>
+<!-- end Vibrant Media IntelliTXT script section -->
+<script type='text/javascript' src='http://180016988.r.cdn77.net/wp-content/plugins/contact-form-7/includes/js/jquery.form.min.js?ver=3.44.0-2013.09.15'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var _wpcf7 = {"loaderUrl":"http:\/\/www.unixmen.com\/wp-content\/plugins\/contact-form-7\/images\/ajax-loader.gif","sending":"Sending ...","cached":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://180016988.r.cdn77.net/wp-content/plugins/contact-form-7/includes/js/scripts.js?ver=3.5.3'></script>
+<script type='text/javascript' src='http://180016988.r.cdn77.net/wp-content/plugins/easy-fancybox/fancybox/jquery.fancybox-1.3.5.pack.js?ver=1.5.5'></script>
+<script type='text/javascript' src='http://180016988.r.cdn77.net/wp-content/plugins/easy-fancybox/jquery.easing.pack.js?ver=1.3'></script>
+
+<script type="text/javascript">
+jQuery(document).on('ready post-load', easy_fancybox_handler );
+</script>
+</body>
+</html>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using apc
+Database Caching 3/181 queries in 0.033 seconds using apc
+Content Delivery Network via 180016988.r.cdn77.net
+
+ Served from: www.unixmen.com @ 2013-11-16 00:42:49 by W3 Total Cache -->
