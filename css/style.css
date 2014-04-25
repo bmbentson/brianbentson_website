@@ -13,10 +13,6 @@ img { border: 0; }
 body {
 	font-family: 'Myriad Pro', Arial, Helvetica, sans-serif;
 	}
-#wrapper {
-	width: 467px;
-	margin: 29px auto;
-	}
 #logo {
 	height: 397px;
 	text-indent: -10000px;
@@ -26,11 +22,10 @@ body {
 	text-indent: 0;
 	}
 h1 {
-	padding-top: 200px;
+	padding-top: 50px;
 	color: #fff;
 	font-size: 36px;
 	font-weight: bold;
-	text-align: center;
 	white-space: nowrap;
 	}
 h2 {
@@ -50,49 +45,16 @@ form {
 	background: url(images/form.png) no-repeat;
 	height: 47px;
 	}
-input {
-	background: none;
-	border: none;
-	outline: 0;
-}
-input.text {
-	width: 268px;
-	padding: 13px 0 13px 24px;
-	color: #505050;
-	font-size: 16px;
-	float: left;
-	}
-input.submit {
-	width: 104px;
-	padding: 13px 0 13px 10px;
-	float: right;
-	cursor: pointer;
-	}
-#buttons {
-	clear: both;
-	text-align: center;
-	}
-#rss {
-	padding-right: 10px;
-	}
 #credit img {
 	width: 54px;
 	height: 50px;
-	text-align: center;
 	}
 #credit {
 	padding-top: 50px;
-	text-align: center;;
 	}
-/* The following are not used */
-.aligncenter {
-	display: block;
+.naavbar-brand{
 	margin-left: auto;
-	margin-right: auto;
+  	margin-right: auto;
+ 	float: none;
 }
-.alignleft {
-	float: left;
-}
-.alignright {
-	float: right;
-}
+/* The following are not used */
