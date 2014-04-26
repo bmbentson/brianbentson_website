@@ -9,41 +9,18 @@ Tags: blue, green, red, dark, one-column, fixed-width, custom-colors, theme-opti
 */
 
 * { padding: 0; margin: 0; }
-img { border: 0; }
+*
+.img-polaroid{padding:4px;background-color:#fff;border:1px solid #ccc;border:1px solid rgba(0,0,0,0.2);-webkit-box-shadow:0 1px 3px rgba(0,0,0,0.1);-moz-box-shadow:0 1px 3px rgba(0,0,0,0.1);box-shadow:0 1px 3px rgba(0,0,0,0.1)}
+
 body {
 	font-family: 'Myriad Pro', Arial, Helvetica, sans-serif;
 	}
-#logo {
-	height: 397px;
-	text-indent: -10000px;
-	margin-bottom: -135px;
-	}
-#logo.blank {
-	text-indent: 0;
-	}
 h1 {
-	padding-top: 50px;
-	color: #fff;
-	font-size: 36px;
-	font-weight: bold;
-	white-space: nowrap;
+	color: white;
+	text-align: left;
 	}
-h2 {
-	font-size: 12px;
-	font-weight: normal;
-	text-align: center;
-	}
-#when, .textwidget {
-	font-size: 18px;
-	text-align: center;
-	}
-#form {
-	width: 410px;
-	margin: 25px auto 15px auto;
-	}
-form {
-	background: url(images/form.png) no-repeat;
-	height: 47px;
+p {
+	color: white;
 	}
 #credit img {
 	width: 54px;
@@ -52,9 +29,4 @@ form {
 #credit {
 	padding-top: 50px;
 	}
-.naavbar-brand{
-	margin-left: auto;
-  	margin-right: auto;
- 	float: none;
-}
 /* The following are not used */
